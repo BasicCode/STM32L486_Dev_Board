@@ -1,0 +1,2 @@
+../Core/Src/drivers/FT5446.c:11:14:FT5446_getTouch	64	static
+../Core/Src/drivers/FT5446.c:33:6:FT5446_FindDevice	16	static

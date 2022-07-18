@@ -1,0 +1,9 @@
+../Core/Src/drivers/DS3231.c:19:6:RTC_update_clock	48	static
+../Core/Src/drivers/DS3231.c:39:13:RTC_get_time_date	64	static
+../Core/Src/drivers/DS3231.c:65:5:RTC_convert_seconds_to_decimal	24	static
+../Core/Src/drivers/DS3231.c:74:5:RTC_convert_hours_to_decimal	24	static
+../Core/Src/drivers/DS3231.c:83:5:RTC_convert_date_to_decimal	24	static
+../Core/Src/drivers/DS3231.c:93:15:RTC_convert_decimal_to_seconds	24	static
+../Core/Src/drivers/DS3231.c:114:13:checkTimeBounds	32	static
+../Core/Src/drivers/DS3231.c:153:5:dayOfTheWeek	40	static
+../Core/Src/drivers/DS3231.c:168:5:getDaysInMonth	24	static

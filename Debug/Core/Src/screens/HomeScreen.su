@@ -1,0 +1,4 @@
+../Core/Src/screens/HomeScreen.c:27:6:MainMenuTask	1136	static
+../Core/Src/screens/HomeScreen.c:107:6:Button_Press	16	static
+../Core/Src/screens/HomeScreen.c:116:6:SplashScreenTask	608	static
+../Core/Src/screens/HomeScreen.c:163:15:Char_To_Bmp	16	static

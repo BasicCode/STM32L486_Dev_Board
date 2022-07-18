@@ -1,0 +1,2 @@
+../Core/Src/screens/DeviceTestScreen.c:26:6:DeviceTestTask	1024	static
+../Core/Src/screens/DeviceTestScreen.c:90:6:OK_Press	16	static

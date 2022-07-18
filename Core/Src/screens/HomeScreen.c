@@ -1,0 +1,189 @@
+/*
+ * HomeScreen.c
+ *	Example home screen using my home made Display Manager.
+ *	Designed for use as a task in freeRTOS.
+ *
+ *  Created on: Jun 25, 2022
+ *      Author: tommy
+ */
+
+#include "screens/HomeScreen.h"
+#include "drivers/DisplayManager.h"
+#include "colours.h"
+#include "drivers/DS3231.h"
+#include "bitmaps/bitmaps.h"
+#include "bitmaps/numbers.h"
+#include "bitmaps/sse.h"
+#include "bitmaps/loading.h"
+
+//Private functions
+void Button_Press(int id);
+unsigned int* Char_To_Bmp(char c);
+
+/**
+ * The main display which is currently a clock. Called Main Menu
+ * for historical reasons. Is not actually a menu.
+ */
+void MainMenuTask(void const * arguments) {
+
+	const unsigned int textColour = COLOR_BLACK;
+
+	//Double gradient effect
+	DM_Add_Element(DM_New_Fill_Gradient(0, 90, WIDTH, 120, COLOR_WHITE, COLOR_BLACK, VERTICAL));
+	DM_Add_Element(DM_New_Fill_Rectangle(0, 120, WIDTH, 184, COLOR_BLACK));
+	DM_Add_Element(DM_New_Fill_Gradient(0, 184, WIDTH, 214, COLOR_BLACK, COLOR_WHITE, VERTICAL));
+
+	//Draw some digits
+	const int xMargin = 16;
+	const int digitWidth = 64;
+	const int colonWidth = 16;
+
+	struct DisplayElement digit1 = DM_New_Bitmap(xMargin, 120, 1, num_1);
+	struct DisplayElement digit2 = DM_New_Bitmap(xMargin + digitWidth, 120, 1, num_5);
+	struct DisplayElement colon1 = DM_New_Bitmap(xMargin + (digitWidth * 2) - colonWidth, 120, 1, colon);
+	struct DisplayElement digit3 = DM_New_Bitmap(xMargin + (2 * digitWidth) + (2 * colonWidth), 120, 1, num_2);
+	struct DisplayElement digit4 = DM_New_Bitmap(xMargin + (3 * digitWidth) + (2 * colonWidth), 120, 1, num_4);
+	struct DisplayElement colon2 = DM_New_Bitmap(xMargin + (digitWidth * 4) + colonWidth, 120, 1, colon);
+	struct DisplayElement digit5 = DM_New_Bitmap(xMargin + (5 * digitWidth), 120, 1, num_5);
+	struct DisplayElement digit6 = DM_New_Bitmap(xMargin + (6 * digitWidth), 120, 1, num_7);
+
+
+	int digit1Id = DM_Add_Element(digit1);
+	int colon1Id = DM_Add_Element(colon1); //colon
+	int digit2Id = DM_Add_Element(digit2);
+
+	int digit3Id = DM_Add_Element(digit3);
+	int colon2Id = DM_Add_Element(colon2); //colon
+	int digit4Id = DM_Add_Element(digit4);
+
+	int digit5Id = DM_Add_Element(digit5);
+	int digit6Id = DM_Add_Element(digit6);
+
+	struct DisplayElement button1 = DM_New_Button(BTN_MIDDLE_X, BTN_BOTTOM_Y, "Test Device", ENABLED);
+	button1.onPress = Button_Press;
+	DM_Add_Element(button1);
+
+	//Previous time to compare to new time and decide to update
+	char oldMin = '0';
+
+	//The main loop
+	while(1) {
+		//Get the time from the RTC once per second
+		struct Time thisTime = RTC_get_time_date();
+		char timeString[7];
+		sprintf(timeString, "%2d%2d%2d", thisTime.hours, thisTime.minutes, thisTime.seconds);
+
+		//Update the bitmaps with the new time
+		//check if we need to update the whole lot, or just seconds
+		if(oldMin != timeString[3]) {
+			digit1.bitmap = Char_To_Bmp(timeString[0]);
+			digit2.bitmap = Char_To_Bmp(timeString[1]);
+			DM_Replace_Element(digit1Id, digit1);
+			DM_Replace_Element(colon1Id, colon1);
+			DM_Replace_Element(digit2Id, digit2);
+
+			digit3.bitmap = Char_To_Bmp(timeString[2]);
+			digit4.bitmap = Char_To_Bmp(timeString[3]);
+			DM_Replace_Element(digit3Id, digit3);
+			DM_Replace_Element(colon2Id, colon2);
+			DM_Replace_Element(digit4Id, digit4);
+		}
+		//Update the seconds componetnts
+		digit5.bitmap = Char_To_Bmp(timeString[4]);
+		digit6.bitmap = Char_To_Bmp(timeString[5]);
+		DM_Replace_Element(digit5Id, digit5);
+		DM_Replace_Element(digit6Id, digit6);
+
+		//Update the old minutes flag for the next update
+		oldMin = timeString[3];
+
+		osDelay(1000);
+	}
+}
+
+/**
+ * Callback for the Test Device button
+ */
+void Button_Press(int id) {
+
+	//let the OS know to change screens
+	xTaskNotify(changeScreenTaskHandle, DEVICE_TEST, eSetValueWithOverwrite);
+}
+
+/**
+ * Displays a splash screen then diverts to the main menu
+ */
+void SplashScreenTask(void const * arguments) {
+	//The SSE Logo
+	struct DisplayElement splashHandle = DM_New_Bitmap(60, 20, 1, sse);
+	DM_Add_Element(splashHandle);
+	//Loading animation
+	int loadingAnimation = DM_Add_Element(DM_New_Animation(208, 300, 1, myAnimation, 3));
+
+	//Reset the MP3 player module
+	DFPlayer_resetModule();
+	//Wait for the device to reset... It's slow
+	osDelay(1000);
+	//Test communication with the player
+    int status = DFPlayer_getStatus();
+    int timeout = 10;
+    int songs = 0;
+    while(timeout--) {
+    	songs = DFPlayer_getTracksInFolder(0);
+    	if(songs > 0)
+    		break;
+    }
+    char numSongs[64];
+    sprintf(numSongs, "DFPlayer Status: %d, with %d songs.", status, songs);
+
+
+	//Make a list of I2C devices
+	char deviceString[128] = "I2C Devices:";
+	for(char i = 0; i < 128; i++) {
+		if(HAL_I2C_IsDeviceReady (&hi2c1, i << 1, 10, 250) == HAL_OK) {
+			sprintf(deviceString, "%s %d", deviceString, i);
+		}
+	}
+
+	//Confirm communication with the RTC
+	struct Time thisTime = RTC_get_time_date();
+	char timeDateString[128];
+	sprintf(timeDateString, "%s %d / %d / %d %d:%d:%d", dayName[thisTime.weekday], thisTime.day,
+			thisTime.month, thisTime.year, thisTime.hours, thisTime.minutes, thisTime.seconds);
+
+	//switch to the main menu
+	xTaskNotify(changeScreenTaskHandle, MAIN_MENU, eSetValueWithOverwrite);
+
+	while(1);
+}
+
+/**
+ * Converts a char to a bitmap represnting that number.
+ */
+unsigned int* Char_To_Bmp(char c) {
+	switch(c) {
+	case '0':
+		return num_0;
+	case '1':
+		return num_1;
+	case '2':
+		return num_2;
+	case '3':
+		return num_3;
+	case '4':
+		return num_4;
+	case '5':
+		return num_5;
+	case '6':
+		return num_6;
+	case '7':
+		return num_7;
+	case '8':
+		return num_8;
+	case '9':
+		return num_9;
+	}
+
+	return num_0;
+}
+
