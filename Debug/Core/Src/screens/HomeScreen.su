@@ -1,4 +1,5 @@
-../Core/Src/screens/HomeScreen.c:27:6:MainMenuTask	1136	static
-../Core/Src/screens/HomeScreen.c:107:6:Button_Press	16	static
-../Core/Src/screens/HomeScreen.c:116:6:SplashScreenTask	608	static
-../Core/Src/screens/HomeScreen.c:163:15:Char_To_Bmp	16	static
+../Core/Src/screens/HomeScreen.c:28:6:MainMenuTask	1216	static
+../Core/Src/screens/HomeScreen.c:114:6:deviceTest_onPress	16	static
+../Core/Src/screens/HomeScreen.c:123:6:settingsScreen_onPress	16	static
+../Core/Src/screens/HomeScreen.c:130:6:SplashScreenTask	608	static
+../Core/Src/screens/HomeScreen.c:177:15:Char_To_Bmp	16	static

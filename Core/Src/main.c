@@ -30,6 +30,7 @@
 //Individual tasks to display
 #include "screens/DeviceTestScreen.h"
 #include "screens/HomeScreen.h"
+#include "screens/SettingsTaskScreen.h"
 
 /* USER CODE END Includes */
 
@@ -482,9 +483,10 @@ void ChangeScreenTask(void const * arguments) {
 	osThreadDef(deviceTestTask, DeviceTestTask, osPriorityNormal, 0, 1024);
 	osThreadDef(mainMenuTask, MainMenuTask, osPriorityNormal, 0, 512);
 	osThreadDef(splashScreenTask, SplashScreenTask, osPriorityNormal, 0, 256);
+	osThreadDef(settingsTask, SettingsTask, osPriorityNormal, 0, 1028);
 
 	//Initial entry screen
-	currentScreenHandle = osThreadCreate(osThread(splashScreenTask), NULL);
+	currentScreenHandle = osThreadCreate(osThread(mainMenuTask), NULL);
 
 	int signal = 0;
 	int event;
@@ -505,6 +507,9 @@ void ChangeScreenTask(void const * arguments) {
 
 				if(signal == DEVICE_TEST)
 					currentScreenHandle = osThreadCreate(osThread(deviceTestTask), NULL);
+
+				if(signal == SETTINGS)
+					currentScreenHandle = osThreadCreate(osThread(settingsTask), NULL);
 
 	    }
 	}

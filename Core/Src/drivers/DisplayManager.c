@@ -24,6 +24,9 @@ void DM_Title_Bar(int id);
 void DM_List(int id);
 void DM_List_onPress(int id, int x, int y);
 void DM_Animation(int id);
+void DM_NumPad(int id);
+void DM_NumPad_Button(int x, int y, char c, State state);
+void DM_NumPad_onPress(int id, int x, int y);
 
 //Some hard coded memory for the display elements - this is just an array of DisplayElements
 struct DisplayElement elements[MAX_ELEMENTS];
@@ -53,7 +56,7 @@ void DM_Init() {
 void DM_Draw() {
 	//Draw each element int he array of display elements
 	for(int i = 0; i < numElements; i++) {
-		//Only draw elements flagged for update, OR elements with a STATE pointer set.
+		//Only draw elements flagged for update
 		if(elements[i].refresh == ONCE) {
 			//Draw this element once then clear the refresh flag
 			elements[i].draw(i);
@@ -69,6 +72,7 @@ void DM_Draw() {
 			}
 
 			//Advance the ticks of an animation
+			//Once the tick counter is reached, the animation advances to the next frame
 			if(elements[i].type == ANIMATION) {
 				elements[i].animationTicks++;
 				//If this element is due to advance to the next frame
@@ -178,6 +182,13 @@ void DM_Remove_Element(int id) {
 }
 
 /**
+ * Returns a reference to the requested element.
+ */
+struct DisplayElement DM_Get_Element(int id) {
+	return elements[id];
+}
+
+/**
  * Determines which element, if any, is at the specified location and returns the ID.
  * If multiple elements exist then the top most element is returned.
  *
@@ -222,10 +233,13 @@ int DM_Do_Press(struct Touch touch) {
 		//Call the relevant onPress function
 		switch(elements[id].type) {
 		case BUTTON:
-			elements[id].onPress(id);
+			DM_Button_onPress(id);
 			break;
 		case LIST:
 			DM_List_onPress(id, touch.X, touch.Y);
+			break;
+		case NUMPAD:
+			DM_NumPad_onPress(id, touch.X, touch.Y);
 			break;
 		}
 	}
@@ -394,13 +408,15 @@ void DM_Bitmap_With_Alpha(int id) {
  * Create a new button and add it to the queue
  */
 struct DisplayElement DM_New_Button(int x, int y, char *text, State state){
-	int width = 100;
+	int width = 120;
 	int height = 40;
 	//If the string is long, then increase button width
 	int len = DM_StrLen(text, 64);
-	if(len > 9) {
+	if(len > 8) {
 		width = len * 12;
-		x -= len * 2;
+		//if this button is on the right-hand edge, then move it back a bit
+		if(x > BTN_MIDDLE_X)
+			x = WIDTH - width - 10;
 	}
 	struct DisplayElement button;
 	button.type = BUTTON;
@@ -409,7 +425,7 @@ struct DisplayElement DM_New_Button(int x, int y, char *text, State state){
 	button.state = state;
 	button.oldState = state - 1; //Will only refresh when the states DONT match.
 	button.draw = DM_Button;
-	button.onPress = DM_Button_onPress;
+	button.onPress = NULL;
 	button.refresh = ALWAYS;
 
 	return button;
@@ -453,11 +469,11 @@ void DM_Button(int id) {
 }
 
 /**
- * Intrinsic button press function handles the highlighting when the button is pressed.
+ * Intrinsic button press function. Any global behaviours for all buttons should go here.
  */
 void DM_Button_onPress(int id) {
-	//Set the button state to highlight
-	DM_Set_State(id, SELECTED);
+	if(elements[id].onPress)
+		elements[id].onPress(id);
 }
 
 /**
@@ -742,5 +758,127 @@ struct DisplayElement DM_New_Animation(int x1, int y1, int scale, unsigned int *
  */
 void DM_Animation(int id) {
 	draw_bitmap(elements[id].x1, elements[id].y1, elements[id].size, elements[id].bitmaps[elements[id].selected]);
+}
+
+/**
+ * Create a new number pad element.
+ *
+ * A number pad will always fill the right-hand half of the display.
+ * Design your components appropriately.
+ */
+struct DisplayElement DM_New_NumPad() {
+	struct DisplayElement numPad;
+	numPad.type = NUMPAD;
+	numPad.x1 = WIDTH - (60 * 3);
+	numPad.y1 = 40;
+	numPad.x2 = WIDTH;
+	numPad.y2 = HEIGHT;
+
+	numPad.selected = 0;
+	numPad.onPress = NULL;
+	numPad.refresh = ALWAYS;
+	numPad.draw = DM_NumPad;
+
+	return numPad;
+}
+
+/**
+ * Draws a number pad to the display;
+ */
+void DM_NumPad(int id) {
+	const int buttonSpace = 60;
+	//Draw a few buttons
+	State state = ENABLED;
+	//Each vertical row
+	for(int y = 0; y < 3; y++) {
+		//..And Each horizontal row
+		for(int x = 0; x < 3; x++) {
+			//Figure out which digit this is
+			int thisDigit = x + (y * 3) + 1;
+
+			//Is this particular digit selected
+			if(elements[id].selected == thisDigit)
+				state = SELECTED;
+			else
+				state = ENABLED;
+
+			//Put the digit with its ASCII to the display
+			DM_NumPad_Button(elements[id].x1 + (x * buttonSpace), elements[id].y1 + (y * buttonSpace), thisDigit + 48, state);
+		}
+	}
+
+	//zero at the very bottom
+	if(elements[id].selected == 11)
+		state = SELECTED;
+	else
+		state = ENABLED;
+	DM_NumPad_Button(elements[id].x1 + (1 * buttonSpace), elements[id].y1 + (3 * buttonSpace), '0', state);
+	//And a backspace button
+	if(elements[id].selected == 12)
+		state = SELECTED;
+	else
+		state = ENABLED;
+	DM_NumPad_Button(elements[id].x1 + (2 * buttonSpace), elements[id].y1 + (3 * buttonSpace), '<', state);
+
+}
+
+/**
+ * Draws an individual number button to the numpad.
+ */
+void DM_NumPad_Button(int x1, int y1, char c, State state) {
+	const int buttonSize = 50;
+	int x2 = x1 + buttonSize;
+	int y2 = y1 + buttonSize;
+	int outlineColour = COLOR_GRAY;
+	int fillColour = COLOR_LIGHTGRAY;
+	int textColour = COLOR_BLACK;
+	if(state == DISABLED) {
+		fillColour = COLOR_WHITE;
+		outlineColour = COLOR_LIGHTGRAY;
+		textColour = COLOR_LIGHTGRAY;
+	}
+	if(state == SELECTED) {
+		fillColour = COLOR_LIGHTBLUE;
+	}
+	//Draw the background
+	fill_rectangle(x1 + 1, y1 + 1, x2 - 1, y2 - 1, fillColour);
+
+	//Draw the outline
+	//Top border
+	fill_rectangle(x1 + 1, y1, x2, y1 + 1, outlineColour);
+	//Left border
+	fill_rectangle(x1, y1 + 1, x1 + 1, y2, outlineColour);
+	//Bottom border
+	fill_rectangle(x1 + 1, y2, x2, y2 + 1, outlineColour);
+	//Right border
+	fill_rectangle(x2, y1 + 1, x2 + 1, y2, outlineColour);
+	//Write the text
+	draw_fast_char(x1 + 12, y1 + 16, c, textColour, fillColour);
+}
+
+/**
+ * Intrinsic onPress function for the number pad. Determines which button was pressed
+ * then hands off to the user-defined onPress function.
+ */
+void DM_NumPad_onPress(int id, int x, int y) {
+	const int buttonSize = 50;
+	const int buttonMargin = 10;
+
+	//Figure out which number was pressed.
+	//The number are arranged in a 3x3 +1 grid.
+
+	//Calculate the X and Y axis location in button-space
+	int xIndex = (int) ((x - elements[id].x1) / (buttonSize + buttonMargin));
+	int yIndex = (int) ((y - elements[id].y1) / (buttonSize + buttonMargin));
+
+	//Work out the index
+	int index = xIndex + (yIndex * 3) + 1;
+
+	//Report the element that's selected
+	elements[id].selected = index;
+
+	//Call any user-defind onPress function
+	if(elements[id].onPress)
+		elements[id].onPress(id);
 }
 

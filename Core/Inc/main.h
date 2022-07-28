@@ -42,7 +42,8 @@ extern "C" {
 typedef enum {
 	DEVICE_TEST,
 	HOME,
-	MAIN_MENU
+	MAIN_MENU,
+	SETTINGS
 } Screens;
 
 

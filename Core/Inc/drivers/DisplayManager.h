@@ -32,7 +32,9 @@ typedef enum {
 	TITLEBAR,
 	FILLGRADIENT,
 	LIST,
-	ANIMATION
+	ANIMATION,
+	NUMPAD,
+	KEYBOARD
 } Type;
 //Refresh frequency of the element
 typedef enum {
@@ -96,6 +98,7 @@ int DM_StrLen(char *str, int length);
 void DM_Set_State(int id, State state);
 void DM_Set_Refresh(int id, Refresh refresh);
 void DM_Remove_Element(int id);
+struct DisplayElement DM_Get_Element(int id);
 int DM_Parse_Press(int x, int y);
 int DM_Do_Press(struct Touch touch);
 struct DisplayElement DM_New_Fill_Rectangle(int x1, int y1, int x2, int y2, int colour);
@@ -110,5 +113,6 @@ struct DisplayElement DM_New_Menu(char *title, char *text);
 struct DisplayElement DM_New_Title_Bar(char *title);
 struct DisplayElement DM_New_List(int x1, int y1, int x2, int y2, char **children, int numChildren);
 struct DisplayElement DM_New_Animation(int x1, int y1, int scale, unsigned int **bitmaps, int numFrames);
+struct DisplayElement DM_New_NumPad();
 
 #endif /* INC_DISPLAYMANAGER_H_ */

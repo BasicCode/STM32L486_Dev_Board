@@ -1,4 +1,6 @@
-Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
+Core/Src/screens/SettingsTaskScreen.o: \
+ ../Core/Src/screens/SettingsTaskScreen.c \
+ ../Core/Inc/screens/SettingsTaskScreen.h ../Core/Inc/main.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
@@ -51,9 +53,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Core/Inc/drivers/DisplayManager.h ../Core/Inc/drivers/FT5446.h \
- ../Core/Inc/colours.h ../Core/Inc/drivers/FT5446.h \
- ../Core/Inc/screens/DeviceTestScreen.h ../Core/Inc/screens/HomeScreen.h \
- ../Core/Inc/screens/SettingsTaskScreen.h
+ ../Core/Inc/colours.h
+../Core/Inc/screens/SettingsTaskScreen.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -109,7 +110,3 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Core/Inc/drivers/DisplayManager.h:
 ../Core/Inc/drivers/FT5446.h:
 ../Core/Inc/colours.h:
-../Core/Inc/drivers/FT5446.h:
-../Core/Inc/screens/DeviceTestScreen.h:
-../Core/Inc/screens/HomeScreen.h:
-../Core/Inc/screens/SettingsTaskScreen.h:

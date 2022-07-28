@@ -17,7 +17,8 @@
 #include "bitmaps/loading.h"
 
 //Private functions
-void Button_Press(int id);
+void deviceTest_onPress(int id);
+void settingsScreen_onPress(int id);
 unsigned int* Char_To_Bmp(char c);
 
 /**
@@ -59,9 +60,15 @@ void MainMenuTask(void const * arguments) {
 	int digit5Id = DM_Add_Element(digit5);
 	int digit6Id = DM_Add_Element(digit6);
 
-	struct DisplayElement button1 = DM_New_Button(BTN_MIDDLE_X, BTN_BOTTOM_Y, "Test Device", ENABLED);
-	button1.onPress = Button_Press;
+	//Button for the device test
+	struct DisplayElement button1 = DM_New_Button(BTN_RIGHT_X, BTN_BOTTOM_Y, "Test Device", ENABLED);
+	button1.onPress = deviceTest_onPress;
 	DM_Add_Element(button1);
+
+	//Button for settings
+	struct DisplayElement button2 = DM_New_Button(BTN_LEFT_X, BTN_BOTTOM_Y, "Settings", ENABLED);
+	button2.onPress = settingsScreen_onPress;
+	DM_Add_Element(button2);
 
 	//Previous time to compare to new time and decide to update
 	char oldMin = '0';
@@ -104,10 +111,17 @@ void MainMenuTask(void const * arguments) {
 /**
  * Callback for the Test Device button
  */
-void Button_Press(int id) {
+void deviceTest_onPress(int id) {
 
 	//let the OS know to change screens
 	xTaskNotify(changeScreenTaskHandle, DEVICE_TEST, eSetValueWithOverwrite);
+}
+
+/**
+ * onPress callback for the settings screen button
+ */
+void settingsScreen_onPress(int id) {
+	xTaskNotify(changeScreenTaskHandle, SETTINGS, eSetValueWithOverwrite);
 }
 
 /**
