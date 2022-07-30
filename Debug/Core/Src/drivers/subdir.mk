@@ -7,21 +7,18 @@
 C_SRCS += \
 ../Core/Src/drivers/DFPlayer.c \
 ../Core/Src/drivers/DS3231.c \
-../Core/Src/drivers/DisplayManager.c \
 ../Core/Src/drivers/FT5446.c \
 ../Core/Src/drivers/ILI9488.c 
 
 C_DEPS += \
 ./Core/Src/drivers/DFPlayer.d \
 ./Core/Src/drivers/DS3231.d \
-./Core/Src/drivers/DisplayManager.d \
 ./Core/Src/drivers/FT5446.d \
 ./Core/Src/drivers/ILI9488.d 
 
 OBJS += \
 ./Core/Src/drivers/DFPlayer.o \
 ./Core/Src/drivers/DS3231.o \
-./Core/Src/drivers/DisplayManager.o \
 ./Core/Src/drivers/FT5446.o \
 ./Core/Src/drivers/ILI9488.o 
 
@@ -33,7 +30,7 @@ Core/Src/drivers/%.o Core/Src/drivers/%.su: ../Core/Src/drivers/%.c Core/Src/dri
 clean: clean-Core-2f-Src-2f-drivers
 
 clean-Core-2f-Src-2f-drivers:
-	-$(RM) ./Core/Src/drivers/DFPlayer.d ./Core/Src/drivers/DFPlayer.o ./Core/Src/drivers/DFPlayer.su ./Core/Src/drivers/DS3231.d ./Core/Src/drivers/DS3231.o ./Core/Src/drivers/DS3231.su ./Core/Src/drivers/DisplayManager.d ./Core/Src/drivers/DisplayManager.o ./Core/Src/drivers/DisplayManager.su ./Core/Src/drivers/FT5446.d ./Core/Src/drivers/FT5446.o ./Core/Src/drivers/FT5446.su ./Core/Src/drivers/ILI9488.d ./Core/Src/drivers/ILI9488.o ./Core/Src/drivers/ILI9488.su
+	-$(RM) ./Core/Src/drivers/DFPlayer.d ./Core/Src/drivers/DFPlayer.o ./Core/Src/drivers/DFPlayer.su ./Core/Src/drivers/DS3231.d ./Core/Src/drivers/DS3231.o ./Core/Src/drivers/DS3231.su ./Core/Src/drivers/FT5446.d ./Core/Src/drivers/FT5446.o ./Core/Src/drivers/FT5446.su ./Core/Src/drivers/ILI9488.d ./Core/Src/drivers/ILI9488.o ./Core/Src/drivers/ILI9488.su
 
 .PHONY: clean-Core-2f-Src-2f-drivers
 

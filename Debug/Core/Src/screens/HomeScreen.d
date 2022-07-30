@@ -51,10 +51,12 @@ Core/Src/screens/HomeScreen.o: ../Core/Src/screens/HomeScreen.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Inc/drivers/DisplayManager.h ../Core/Inc/drivers/FT5446.h \
- ../Core/Inc/colours.h ../Core/Inc/drivers/DS3231.h \
- ../Core/Inc/bitmaps/bitmaps.h ../Core/Inc/bitmaps/numbers.h \
- ../Core/Inc/bitmaps/sse.h ../Core/Inc/bitmaps/loading.h
+ ../Core/Inc/DisplayManager/DisplayManager.h ../Core/Inc/drivers/FT5446.h \
+ ../Core/Inc/DisplayManager/Button.h ../Core/Inc/DisplayManager/Bitmap.h \
+ ../Core/Inc/DisplayManager/Fill.h ../Core/Inc/colours.h \
+ ../Core/Inc/drivers/DS3231.h ../Core/Inc/bitmaps/bitmaps.h \
+ ../Core/Inc/bitmaps/numbers.h ../Core/Inc/bitmaps/sse.h \
+ ../Core/Inc/bitmaps/loading.h
 ../Core/Inc/screens/HomeScreen.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
@@ -108,8 +110,11 @@ Core/Src/screens/HomeScreen.o: ../Core/Src/screens/HomeScreen.c \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-../Core/Inc/drivers/DisplayManager.h:
+../Core/Inc/DisplayManager/DisplayManager.h:
 ../Core/Inc/drivers/FT5446.h:
+../Core/Inc/DisplayManager/Button.h:
+../Core/Inc/DisplayManager/Bitmap.h:
+../Core/Inc/DisplayManager/Fill.h:
 ../Core/Inc/colours.h:
 ../Core/Inc/drivers/DS3231.h:
 ../Core/Inc/bitmaps/bitmaps.h:

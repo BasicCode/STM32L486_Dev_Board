@@ -52,8 +52,10 @@ Core/Src/screens/DeviceTestScreen.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Inc/drivers/DisplayManager.h ../Core/Inc/drivers/FT5446.h \
- ../Core/Inc/colours.h ../Core/Inc/drivers/FT5446.h \
+ ../Core/Inc/DisplayManager/DisplayManager.h ../Core/Inc/drivers/FT5446.h \
+ ../Core/Inc/DisplayManager/Button.h \
+ ../Core/Inc/DisplayManager/Animation.h ../Core/Inc/DisplayManager/Text.h \
+ ../Core/Inc/DisplayManager/TitleBar.h ../Core/Inc/colours.h \
  ../Core/Inc/drivers/DFPlayer.h ../Core/Inc/drivers/DS3231.h \
  ../Core/Inc/bitmaps/bitmaps.h ../Core/Inc/bitmaps/loading.h
 ../Core/Inc/screens/DeviceTestScreen.h:
@@ -109,10 +111,13 @@ Core/Src/screens/DeviceTestScreen.o: \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-../Core/Inc/drivers/DisplayManager.h:
+../Core/Inc/DisplayManager/DisplayManager.h:
 ../Core/Inc/drivers/FT5446.h:
+../Core/Inc/DisplayManager/Button.h:
+../Core/Inc/DisplayManager/Animation.h:
+../Core/Inc/DisplayManager/Text.h:
+../Core/Inc/DisplayManager/TitleBar.h:
 ../Core/Inc/colours.h:
-../Core/Inc/drivers/FT5446.h:
 ../Core/Inc/drivers/DFPlayer.h:
 ../Core/Inc/drivers/DS3231.h:
 ../Core/Inc/bitmaps/bitmaps.h:

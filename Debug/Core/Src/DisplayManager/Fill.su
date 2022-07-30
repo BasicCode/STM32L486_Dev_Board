@@ -1,0 +1,4 @@
+../Core/Src/DisplayManager/Fill.c:20:23:DM_New_Fill_Rectangle	104	static
+../Core/Src/DisplayManager/Fill.c:33:6:DM_Fill_Rectangle	40	static
+../Core/Src/DisplayManager/Fill.c:41:23:DM_New_Fill_Gradient	104	static
+../Core/Src/DisplayManager/Fill.c:57:6:DM_Fill_Gradient	48	static

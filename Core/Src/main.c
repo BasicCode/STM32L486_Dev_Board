@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "drivers/DisplayManager.h"
+#include "DisplayManager/DisplayManager.h"
 #include "colours.h"
 #include "stdio.h"
 #include "drivers/FT5446.h"
@@ -535,6 +535,14 @@ void TouchTask(void const * argument) {
 			pressId = DM_Do_Press(touch);
 	    }
 	}
+}
+
+/**
+ * Callback for any button that wants to return HOME
+ */
+void home_onPress(int id) {
+	//let the OS know to change screens
+	xTaskNotify(changeScreenTaskHandle, MAIN_MENU, eSetValueWithOverwrite);
 }
 /* USER CODE END 4 */
 

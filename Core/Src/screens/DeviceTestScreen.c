@@ -9,7 +9,13 @@
  */
 
 #include "screens/DeviceTestScreen.h"
-#include "drivers/DisplayManager.h"
+//Display Elements
+#include "DisplayManager/DisplayManager.h"
+#include "DisplayManager/Button.h"
+#include "DisplayManager/Animation.h"
+#include "DisplayManager/Text.h"
+#include "DisplayManager/TitleBar.h"
+
 #include "colours.h"
 #include "drivers/FT5446.h"
 #include "drivers/DFPlayer.h"

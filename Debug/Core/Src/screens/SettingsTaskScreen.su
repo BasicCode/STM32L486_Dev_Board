@@ -1,3 +1,2 @@
-../Core/Src/screens/SettingsTaskScreen.c:19:6:SettingsTask	504	static
-../Core/Src/screens/SettingsTaskScreen.c:49:6:HOME_Press	16	static
-../Core/Src/screens/SettingsTaskScreen.c:57:6:numPad_onPress	112	static
+../Core/Src/screens/SettingsTaskScreen.c:24:6:SettingsTask	504	static
+../Core/Src/screens/SettingsTaskScreen.c:53:6:numPad_onPress	112	static

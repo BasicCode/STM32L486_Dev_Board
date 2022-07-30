@@ -9,10 +9,7 @@
 #define INC_DISPLAYMANAGER_H_
 
 #include "stm32l4xx_hal.h"
-#include "FT5446.h"
-
-//Total number of elements on the screen at any time
-#define MAX_ELEMENTS	32
+#include "drivers/FT5446.h"
 
 //Possible states (usually for a button)
 typedef enum  {
@@ -86,6 +83,18 @@ typedef enum {
 	BTN_BOTTOM_Y = 272,
 } ButtonPositions;
 
+//Total number of elements on the screen at any time
+#define MAX_ELEMENTS	32
+
+//The array of screen elements - Declared in the parent C file
+extern struct DisplayElement elements[MAX_ELEMENTS];
+
+//Default ticks per frame for animations
+#define TICKS_PER_FRAME 2
+
+//A default background colour
+#define BG_COLOUR 0xFFFF
+
 //Function Prototypes
 void DM_Init();
 void DM_Draw();
@@ -101,18 +110,5 @@ void DM_Remove_Element(int id);
 struct DisplayElement DM_Get_Element(int id);
 int DM_Parse_Press(int x, int y);
 int DM_Do_Press(struct Touch touch);
-struct DisplayElement DM_New_Fill_Rectangle(int x1, int y1, int x2, int y2, int colour);
-struct DisplayElement DM_New_Fill_Gradient(int x1, int y1, int x2, int y2, unsigned int startColour, unsigned int endColour, Orientation orientation);
-struct DisplayElement DM_New_Text(int x, int y, int size, int colour, char* text);
-struct DisplayElement DM_New_Fast_Text(int x, int y, int colour, int backgroundColour, char* text);
-struct DisplayElement DM_New_Bitmap(int x, int y, int scale, const unsigned int *bitmap);
-struct DisplayElement DM_New_Bitmap_With_Alpha(int x, int y, int alphaColour, int scale, const unsigned int *src);
-struct DisplayElement DM_New_Button(int x, int y, char *text, State state);
-struct DisplayElement DM_New_MessageBox(char *title, char *text);
-struct DisplayElement DM_New_Menu(char *title, char *text);
-struct DisplayElement DM_New_Title_Bar(char *title);
-struct DisplayElement DM_New_List(int x1, int y1, int x2, int y2, char **children, int numChildren);
-struct DisplayElement DM_New_Animation(int x1, int y1, int scale, unsigned int **bitmaps, int numFrames);
-struct DisplayElement DM_New_NumPad();
 
 #endif /* INC_DISPLAYMANAGER_H_ */

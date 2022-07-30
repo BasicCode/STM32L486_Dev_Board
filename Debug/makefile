@@ -17,6 +17,7 @@ RM := rm -rf
 -include Core/Startup/subdir.mk
 -include Core/Src/screens/subdir.mk
 -include Core/Src/drivers/subdir.mk
+-include Core/Src/DisplayManager/subdir.mk
 -include Core/Src/subdir.mk
 -include Core/Inc/subdir.mk
 -include objects.mk

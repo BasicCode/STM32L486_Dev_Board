@@ -1,0 +1,4 @@
+../Core/Src/DisplayManager/Bitmap.c:21:23:DM_New_Bitmap	104	static
+../Core/Src/DisplayManager/Bitmap.c:38:6:DM_Bitmap	24	static
+../Core/Src/DisplayManager/Bitmap.c:45:23:DM_New_Bitmap_With_Alpha	104	static
+../Core/Src/DisplayManager/Bitmap.c:63:6:DM_Bitmap_With_Alpha	40	static

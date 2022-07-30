@@ -1,0 +1,3 @@
+../Core/Src/DisplayManager/List.c:20:23:DM_New_List	104	static
+../Core/Src/DisplayManager/List.c:37:6:DM_List	64	static
+../Core/Src/DisplayManager/List.c:71:6:DM_List_onPress	32	static

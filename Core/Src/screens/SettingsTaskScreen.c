@@ -2,11 +2,16 @@
  * Screen which displays, edits, and saves settings for the device.
  */
 
+#include <DisplayManager/Fill.h>
 #include "screens/SettingsTaskScreen.h"
-#include "drivers/DisplayManager.h"
 #include "colours.h"
+//Display Elements
+#include "DisplayManager/DisplayManager.h"
+#include "DisplayManager/NumPad.h"
+#include "DisplayManager/Button.h"
+#include "DisplayManager/Text.h"
+#include "DisplayManager/TitleBar.h"
 
-void HOME_Press(int id);
 void numPad_onPress(int id);
 
 char text[64] = "";
@@ -24,7 +29,7 @@ void SettingsTask(void const * args) {
 	DM_Add_Element(DM_New_Title_Bar("Settings"));
 	//HOME
 	struct DisplayElement okBtn = DM_New_Button(BTN_LEFT_X, BTN_BOTTOM_Y, "BACK", ENABLED);
-	okBtn.onPress = HOME_Press;
+	okBtn.onPress = home_onPress;
 	int okBtnId = DM_Add_Element(okBtn);
 
 	//draw a number pad
@@ -33,22 +38,13 @@ void SettingsTask(void const * args) {
 	DM_Add_Element(numPad);
 
 	//A blank area to clear the text box - will make this part of the actual element later
-	struct DisplayElement blankBox = DM_New_Fill_Rectangle(0, 45, 240, 70, COLOR_WHITE);
+	struct DisplayElement blankBox = DM_New_Fill_Rectangle(0, 45, 260, 70, COLOR_WHITE);
 	textBlankId = DM_Add_Element(blankBox);
 	//A text box to put the numbers in
 	struct DisplayElement textBox = DM_New_Text(0, 45, COLOR_BLUE, 2, text);
 	textBoxId = DM_Add_Element(textBox);
 
 	while(1);
-}
-
-
-/**
- * Callback for the OK / HOME button
- */
-void HOME_Press(int id) {
-	//let the OS know to change screens
-	xTaskNotify(changeScreenTaskHandle, MAIN_MENU, eSetValueWithOverwrite);
 }
 
 /**
@@ -71,7 +67,7 @@ void numPad_onPress(int id) {
 		strncat(text, &c, 1);
 	}
 
-	//Register the text element for update.
+	//Register the blanking square, and the text element for update.
 	DM_Refresh_Element(textBlankId);
 	DM_Refresh_Element(textBoxId);
 }

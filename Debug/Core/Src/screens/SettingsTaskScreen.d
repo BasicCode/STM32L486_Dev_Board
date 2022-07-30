@@ -1,6 +1,7 @@
 Core/Src/screens/SettingsTaskScreen.o: \
  ../Core/Src/screens/SettingsTaskScreen.c \
- ../Core/Inc/screens/SettingsTaskScreen.h ../Core/Inc/main.h \
+ ../Core/Inc/DisplayManager/Fill.h \
+ ../Core/Inc/DisplayManager/DisplayManager.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
@@ -35,6 +36,7 @@ Core/Src/screens/SettingsTaskScreen.o: \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
+ ../Core/Inc/drivers/FT5446.h ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
@@ -52,10 +54,11 @@ Core/Src/screens/SettingsTaskScreen.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Inc/drivers/DisplayManager.h ../Core/Inc/drivers/FT5446.h \
- ../Core/Inc/colours.h
-../Core/Inc/screens/SettingsTaskScreen.h:
-../Core/Inc/main.h:
+ ../Core/Inc/screens/SettingsTaskScreen.h ../Core/Inc/colours.h \
+ ../Core/Inc/DisplayManager/NumPad.h ../Core/Inc/DisplayManager/Button.h \
+ ../Core/Inc/DisplayManager/Text.h ../Core/Inc/DisplayManager/TitleBar.h
+../Core/Inc/DisplayManager/Fill.h:
+../Core/Inc/DisplayManager/DisplayManager.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h:
@@ -90,6 +93,8 @@ Core/Src/screens/SettingsTaskScreen.o: \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
+../Core/Inc/drivers/FT5446.h:
+../Core/Inc/main.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 ../Core/Inc/FreeRTOSConfig.h:
@@ -107,6 +112,9 @@ Core/Src/screens/SettingsTaskScreen.o: \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-../Core/Inc/drivers/DisplayManager.h:
-../Core/Inc/drivers/FT5446.h:
+../Core/Inc/screens/SettingsTaskScreen.h:
 ../Core/Inc/colours.h:
+../Core/Inc/DisplayManager/NumPad.h:
+../Core/Inc/DisplayManager/Button.h:
+../Core/Inc/DisplayManager/Text.h:
+../Core/Inc/DisplayManager/TitleBar.h:

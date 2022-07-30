@@ -8,7 +8,12 @@
  */
 
 #include "screens/HomeScreen.h"
-#include "drivers/DisplayManager.h"
+//Display Manager
+#include "DisplayManager/DisplayManager.h"
+#include "DisplayManager/Button.h"
+#include "DisplayManager/Bitmap.h"
+#include "DisplayManager/Fill.h"
+
 #include "colours.h"
 #include "drivers/DS3231.h"
 #include "bitmaps/bitmaps.h"

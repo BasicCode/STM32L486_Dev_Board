@@ -1,0 +1,2 @@
+../Core/Src/DisplayManager/MessageBox.c:19:23:DM_New_MessageBox	112	static
+../Core/Src/DisplayManager/MessageBox.c:38:6:DM_MessageBox	128	dynamic

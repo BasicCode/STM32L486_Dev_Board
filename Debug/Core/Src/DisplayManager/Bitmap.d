@@ -1,5 +1,5 @@
-Core/Src/drivers/DisplayManager.o: ../Core/Src/drivers/DisplayManager.c \
- ../Core/Inc/drivers/DisplayManager.h \
+Core/Src/DisplayManager/Bitmap.o: ../Core/Src/DisplayManager/Bitmap.c \
+ ../Core/Inc/DisplayManager/DisplayManager.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
@@ -52,8 +52,8 @@ Core/Src/drivers/DisplayManager.o: ../Core/Src/drivers/DisplayManager.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Inc/drivers/ILI9488.h
-../Core/Inc/drivers/DisplayManager.h:
+ ../Core/Inc/DisplayManager/Bitmap.h ../Core/Inc/colours.h
+../Core/Inc/DisplayManager/DisplayManager.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h:
@@ -107,4 +107,5 @@ Core/Src/drivers/DisplayManager.o: ../Core/Src/drivers/DisplayManager.c \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-../Core/Inc/drivers/ILI9488.h:
+../Core/Inc/DisplayManager/Bitmap.h:
+../Core/Inc/colours.h:

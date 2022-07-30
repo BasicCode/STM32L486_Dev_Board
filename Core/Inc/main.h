@@ -77,7 +77,7 @@ extern osThreadId changeScreenTaskHandle;
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
+void home_onPress(int id);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
