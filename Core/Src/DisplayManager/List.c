@@ -18,7 +18,7 @@ void DM_List_onPress(int id, int x, int y);
  * Creates a new list element for you
  */
 struct DisplayElement DM_New_List(int x1, int y1, int x2, int y2, char **children, int numChildren) {
-	struct DisplayElement list;
+	struct DisplayElement list = getDefaultElement();
 	//Hard coded X, Y and size for the moment
 	list.x1 = x1; list.y1 = y1; list.x2 = x2; list.y2 = y2;
 	list.type = LIST;

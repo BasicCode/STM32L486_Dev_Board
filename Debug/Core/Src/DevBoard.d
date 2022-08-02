@@ -1,6 +1,5 @@
-Core/Src/DisplayManager/Fill.o: ../Core/Src/DisplayManager/Fill.c \
- ../Core/Inc/DisplayManager/DisplayManager.h \
- ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
+Core/Src/DevBoard.o: ../Core/Src/DevBoard.c ../Core/Inc/DevBoard.h \
+ ../Core/Inc/main.h ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h \
@@ -34,7 +33,6 @@ Core/Src/DisplayManager/Fill.o: ../Core/Src/DisplayManager/Fill.c \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- ../Core/Inc/DevBoard.h ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
@@ -52,10 +50,13 @@ Core/Src/DisplayManager/Fill.o: ../Core/Src/DisplayManager/Fill.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Inc/drivers/DS3231.h ../Core/Inc/drivers/FT5446.h \
- ../Core/Inc/main.h ../Core/Inc/DisplayManager/Fill.h \
- ../Core/Inc/colours.h
-../Core/Inc/DisplayManager/DisplayManager.h:
+ ../Core/Inc/drivers/DS3231.h ../Core/Inc/DisplayManager/DisplayManager.h \
+ ../Core/Inc/drivers/FT5446.h ../Core/Inc/main.h ../Core/Inc/colours.h \
+ ../Core/Inc/drivers/DS3231.h ../Core/Inc/screens/DeviceTestScreen.h \
+ ../Core/Inc/screens/HomeScreen.h \
+ ../Core/Inc/screens/SettingsTaskScreen.h
+../Core/Inc/DevBoard.h:
+../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h:
@@ -90,8 +91,6 @@ Core/Src/DisplayManager/Fill.o: ../Core/Src/DisplayManager/Fill.c \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
-../Core/Inc/DevBoard.h:
-../Core/Inc/main.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 ../Core/Inc/FreeRTOSConfig.h:
@@ -110,7 +109,11 @@ Core/Src/DisplayManager/Fill.o: ../Core/Src/DisplayManager/Fill.c \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 ../Core/Inc/drivers/DS3231.h:
+../Core/Inc/DisplayManager/DisplayManager.h:
 ../Core/Inc/drivers/FT5446.h:
 ../Core/Inc/main.h:
-../Core/Inc/DisplayManager/Fill.h:
 ../Core/Inc/colours.h:
+../Core/Inc/drivers/DS3231.h:
+../Core/Inc/screens/DeviceTestScreen.h:
+../Core/Inc/screens/HomeScreen.h:
+../Core/Inc/screens/SettingsTaskScreen.h:

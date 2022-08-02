@@ -18,7 +18,7 @@ void DM_Title_Bar(int id);
  */
 struct DisplayElement DM_New_Title_Bar(char *title) {
 	int height = 40;
-	struct DisplayElement titleBar;
+	struct DisplayElement titleBar = getDefaultElement();
 	titleBar.type = TITLEBAR;
 	titleBar.x1 = 0; titleBar.y1 = 0; titleBar.x2 = WIDTH; titleBar.y2 = height;
 	titleBar.title = title;

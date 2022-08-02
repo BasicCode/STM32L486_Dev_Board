@@ -34,7 +34,7 @@ Core/Src/DisplayManager/TitleBar.o: ../Core/Src/DisplayManager/TitleBar.c \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- ../Core/Inc/drivers/FT5446.h ../Core/Inc/main.h \
+ ../Core/Inc/DevBoard.h ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
@@ -52,7 +52,9 @@ Core/Src/DisplayManager/TitleBar.o: ../Core/Src/DisplayManager/TitleBar.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Inc/DisplayManager/TitleBar.h ../Core/Inc/colours.h
+ ../Core/Inc/drivers/DS3231.h ../Core/Inc/drivers/FT5446.h \
+ ../Core/Inc/main.h ../Core/Inc/DisplayManager/TitleBar.h \
+ ../Core/Inc/colours.h
 ../Core/Inc/DisplayManager/DisplayManager.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -88,7 +90,7 @@ Core/Src/DisplayManager/TitleBar.o: ../Core/Src/DisplayManager/TitleBar.c \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
-../Core/Inc/drivers/FT5446.h:
+../Core/Inc/DevBoard.h:
 ../Core/Inc/main.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
@@ -107,5 +109,8 @@ Core/Src/DisplayManager/TitleBar.o: ../Core/Src/DisplayManager/TitleBar.c \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
+../Core/Inc/drivers/DS3231.h:
+../Core/Inc/drivers/FT5446.h:
+../Core/Inc/main.h:
 ../Core/Inc/DisplayManager/TitleBar.h:
 ../Core/Inc/colours.h:

@@ -11,7 +11,7 @@
 #define	ILI9488_H
 
 //Set up any ports in your main.c file.
-#include "main.h"
+#include "DevBoard.h"
 
 #define SPI_MODE 0 //Set mode 1 for serial / SPI mode, or 0 for parallel mode.
 extern SPI_HandleTypeDef hspi2;

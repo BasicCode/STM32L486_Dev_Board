@@ -13,6 +13,7 @@
 void DM_NumPad(int id);
 void DM_NumPad_Button(int x, int y, char c, State state);
 void DM_NumPad_onPress(int id, int x, int y);
+void updateTextBox(int id, int index);
 
 /**
  * Create a new number pad element.
@@ -21,13 +22,14 @@ void DM_NumPad_onPress(int id, int x, int y);
  * Design your components appropriately.
  */
 struct DisplayElement DM_New_NumPad() {
-	struct DisplayElement numPad;
+	struct DisplayElement numPad = getDefaultElement();
 	numPad.type = NUMPAD;
 	numPad.x1 = WIDTH - (60 * 3);
-	numPad.y1 = 40;
+	numPad.y1 = 50;
 	numPad.x2 = WIDTH;
 	numPad.y2 = HEIGHT;
 
+	numPad.state = ENABLED;
 	numPad.selected = 0;
 	numPad.onPress = NULL;
 	numPad.refresh = ALWAYS;
@@ -51,7 +53,7 @@ void DM_NumPad(int id) {
 			int thisDigit = x + (y * 3) + 1;
 
 			//Is this particular digit selected
-			if(elements[id].selected == thisDigit)
+			if(elements[id].selected == thisDigit && elements[id].state == SELECTED)
 				state = SELECTED;
 			else
 				state = ENABLED;
@@ -62,13 +64,13 @@ void DM_NumPad(int id) {
 	}
 
 	//zero at the very bottom
-	if(elements[id].selected == 11)
+	if(elements[id].selected == 11 && elements[id].state == SELECTED)
 		state = SELECTED;
 	else
 		state = ENABLED;
 	DM_NumPad_Button(elements[id].x1 + (1 * buttonSpace), elements[id].y1 + (3 * buttonSpace), '0', state);
 	//And a backspace button
-	if(elements[id].selected == 12)
+	if(elements[id].selected == 12 && elements[id].state == SELECTED)
 		state = SELECTED;
 	else
 		state = ENABLED;
@@ -119,7 +121,7 @@ void DM_NumPad_onPress(int id, int x, int y) {
 	const int buttonMargin = 10;
 
 	//Figure out which number was pressed.
-	//The number are arranged in a 3x3 +1 grid.
+	//The number are arranged in a 3x4
 
 	//Calculate the X and Y axis location in button-space
 	int xIndex = (int) ((x - elements[id].x1) / (buttonSize + buttonMargin));
@@ -128,10 +130,48 @@ void DM_NumPad_onPress(int id, int x, int y) {
 	//Work out the index
 	int index = xIndex + (yIndex * 3) + 1;
 
-	//Report the element that's selected
+	//Report the number that's selected
 	elements[id].selected = index;
+
+	//If a text box is selected, then update its string
+	if(elements[focusedElement].type == TEXTBOX) {
+		updateTextBox(focusedElement, index);
+	}
 
 	//Call any user-defind onPress function
 	if(elements[id].onPress)
 		elements[id].onPress(id);
 }
+
+/**
+ * Updates the currently selected text box with the button press
+ */
+void updateTextBox(int id, int num) {
+
+	int len = strlen(elements[id].text);
+
+	//convert the index to a character
+	//The numbers count up from 1, with 0 being reserved as NULL.
+	//So the number zero is actually 11, and backspace is 12.
+	if(num == 11)
+		num = 0;
+
+	//If the num is 12 then it's a backspace, otherwise it's a digit
+	if(num == 12) {
+		//Change the last character to null
+		elements[id].text[len - 1] = '\0';
+	} else {
+		//Check we don't overrun the maxLength of the box
+		if(len < elements[id].maxLength) {
+			//Calculate the new char and add it to the text string
+			char c = num + 48;
+			strncat(elements[id].text, &c, 1);
+		}
+	}
+
+	//Register the element for update.
+	DM_Refresh_Element(id);
+}
+
+
+

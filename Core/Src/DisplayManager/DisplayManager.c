@@ -5,9 +5,15 @@
  * to the display when desired.
  */
 
-//Your LCD driver
-#include <DisplayManager/Fill.h>
 #include "DisplayManager/DisplayManager.h"
+//Elements used here
+#include "DisplayManager/Fill.h"
+#include "DisplayManager/NumPad.h"
+#include "DisplayManager/Button.h"
+#include "DisplayManager/List.h"
+
+
+//Your LCD driver
 #include "drivers/ILI9488.h"
 
 //Private functions definitions
@@ -20,8 +26,9 @@ void DM_Menu(int id);
 struct DisplayElement elements[MAX_ELEMENTS];
 //The global element counter
 int numElements = 0;
-
-//const unsigned int *BGImage = background;
+//The current focused element (there can be only one)
+int focusedElement = 0;
+int oldFocusedElement = 0;
 
 //The currently touched item, to keep track of drag gestures
 int previously_touched_element = 0;
@@ -214,7 +221,7 @@ int DM_Do_Press(struct Touch touch) {
 		//Revert the element's state
 		elements[previously_touched_element].state = ENABLED;
 
-		//Call the relevant onPress function
+		//Call the relevant intrinsic onPress function
 		switch(elements[id].type) {
 		case BUTTON:
 			DM_Button_onPress(id);
@@ -225,7 +232,13 @@ int DM_Do_Press(struct Touch touch) {
 		case NUMPAD:
 			DM_NumPad_onPress(id, touch.X, touch.Y);
 			break;
+		case TEXTBOX:
+			DM_TextBox_onPress(id);
+			break;
 		}
+
+		//The controller seems to put extra RELEASE events, so invalidate the previously_touched_element
+		previously_touched_element = -1;
 	}
 
 	//A press has been recorded, or moved, but has not been released yet
@@ -234,6 +247,16 @@ int DM_Do_Press(struct Touch touch) {
 		previously_touched_element = id;
 		//Set the state of the helement for context highlighting
 		elements[id].state = SELECTED;
+
+
+		//If an element can take focus, then take it
+		if(elements[id].canFocus) {
+			oldFocusedElement = focusedElement;
+			focusedElement = id;
+			//Tell the previously focused element to update
+			if(elements[oldFocusedElement].canFocus)
+				elements[oldFocusedElement].refresh = ONCE;
+		}
 	}
 
 	//Finally, if the touch was released, but it is no longer on the element, then revert the element state
@@ -256,5 +279,39 @@ int DM_Do_Press(struct Touch touch) {
  * onPress	- A pointer to a function to call if the element is pressed
  */
 
+/**
+ * Returns an empty element with everything set to either zero, or NULL.
+ * Use this to build a new element safely without random memory.
+ */
+struct DisplayElement getDefaultElement() {
+	struct DisplayElement newElement;
+	newElement.type;
+	newElement.x1 = 0;
+	newElement.y1 = 0;
+	newElement.x2 = 0;
+	newElement.y2 = 0;
+	newElement.size = 0;
+	newElement.selected = 0;
+	newElement.colour = 0;
+	newElement.bgColour = 0;
+	newElement.orientation = 0;
+	newElement.bitmap = NULL;
+	newElement.bitmaps = NULL;
+	newElement.title = NULL;
+	newElement.text = NULL;
+	newElement.state = 0;
+	newElement.oldState = -1;
+	newElement.canFocus = 0;
+	newElement.maxLength = 0;
+	newElement.refresh = 0;
+	newElement.draw = NULL;
+	newElement.onPress = NULL;
+	newElement.onDrag = NULL;
+	newElement.children = NULL;
+	newElement.numChildren = 0;
+	newElement.animationTicks = 0;
+	newElement.ticksPerFrame = TICKS_PER_FRAME;
 
+	return newElement;
+}
 

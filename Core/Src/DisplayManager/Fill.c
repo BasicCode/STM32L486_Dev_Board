@@ -18,7 +18,7 @@ void DM_Fill_Gradient(int id);
  * Create a rectangle display element and add it to the queue
  */
 struct DisplayElement DM_New_Fill_Rectangle(int x1, int y1, int x2, int y2, int colour) {
-	struct DisplayElement box;
+	struct DisplayElement box = getDefaultElement();
 	box.type = FILLRECTANGLE;
 	box.x1 = x1; box.y1 = y1; box.x2 = x2; box.y2 = y2;
 	box.colour = colour;
@@ -39,7 +39,7 @@ void DM_Fill_Rectangle(int id) {
  * Creates a gradient filled rectangle element between two colours.
  */
 struct DisplayElement DM_New_Fill_Gradient(int x1, int y1, int x2, int y2, unsigned int startColour, unsigned int endColour, Orientation orientation) {
-	struct DisplayElement box;
+	struct DisplayElement box = getDefaultElement();
 	box.type = FILLGRADIENT;
 	box.x1 = x1; box.y1 = y1; box.x2 = x2; box.y2 = y2;
 	box.colour = startColour;

@@ -22,15 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "DisplayManager/DisplayManager.h"
-#include "colours.h"
-#include "stdio.h"
-#include "drivers/FT5446.h"
-
-//Individual tasks to display
-#include "screens/DeviceTestScreen.h"
-#include "screens/HomeScreen.h"
-#include "screens/SettingsTaskScreen.h"
+#include "DevBoard.h"
 
 /* USER CODE END Includes */
 
@@ -60,9 +52,6 @@ UART_HandleTypeDef huart1;
 osThreadId defaultTaskHandle;
 /* USER CODE BEGIN PV */
 
-osThreadId currentScreenHandle; //Handle to the thread drawing the current screen
-osThreadId changeScreenTaskHandle; //Thraed which handles screen changes
-osThreadId touchTaskHandle; //Thread which handles touch events
 
 /* USER CODE END PV */
 
@@ -77,8 +66,6 @@ void StartDefaultTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
-void ChangeScreenTask(void const * argument);
-void TouchTask(void const * argument);
 
 /* USER CODE END PFP */
 
@@ -151,17 +138,13 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityHigh, 0, 128);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityIdle, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
 
-  //Task which handles switching screens
-  osThreadDef(changeScreenTask, ChangeScreenTask, osPriorityNormal, 0, 512);
-  changeScreenTaskHandle = osThreadCreate(osThread(changeScreenTask), NULL);
-  //This task handles touching
-  osThreadDef(touchTask, TouchTask, osPriorityNormal, 0, 512);
-  touchTaskHandle = osThreadCreate(osThread(touchTask), NULL);
+  //Initialise the threads which run the peripherals on this board
+  DevBoardBegin();
 
   /* USER CODE END RTOS_THREADS */
 
@@ -473,77 +456,6 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
-/**
- * Function which receives signals, usually from button callbacks, and changes
- * the display to the desired screen.
- */
-void ChangeScreenTask(void const * arguments) {
-
-	//Any screens you want to display
-	osThreadDef(deviceTestTask, DeviceTestTask, osPriorityNormal, 0, 1024);
-	osThreadDef(mainMenuTask, MainMenuTask, osPriorityNormal, 0, 512);
-	osThreadDef(splashScreenTask, SplashScreenTask, osPriorityNormal, 0, 256);
-	osThreadDef(settingsTask, SettingsTask, osPriorityNormal, 0, 1028);
-
-	//Initial entry screen
-	currentScreenHandle = osThreadCreate(osThread(mainMenuTask), NULL);
-
-	int signal = 0;
-	int event;
-	while(1) {
-			event = xTaskNotifyWait(0x00, 0xFFFF, &signal, 0);
-
-			if(event == pdTRUE) {
-
-				//Clear the display elements
-				DM_Clear();
-
-				//End the current screen thread
-				osThreadTerminate(currentScreenHandle);
-
-				//Load the desired screen
-				if(signal == MAIN_MENU)
-					currentScreenHandle = osThreadCreate(osThread(mainMenuTask), NULL);
-
-				if(signal == DEVICE_TEST)
-					currentScreenHandle = osThreadCreate(osThread(deviceTestTask), NULL);
-
-				if(signal == SETTINGS)
-					currentScreenHandle = osThreadCreate(osThread(settingsTask), NULL);
-
-	    }
-	}
-}
-
-/**
- * Handles touch events and reports them to the display manager.
- */
-void TouchTask(void const * argument) {
-	osEvent evt;
-	int  pressId = -1;
-	struct Touch touch;
-
-	for(;;) {
-	    // wait for a signal
-	    evt = osSignalWait(0x01, 0);
-	    if (evt.status == osEventSignal)  {
-
-	    	//Get the most recent touch point
-	    	touch = FT5446_getTouch();
-
-	    	//Envoke the pressed element
-			pressId = DM_Do_Press(touch);
-	    }
-	}
-}
-
-/**
- * Callback for any button that wants to return HOME
- */
-void home_onPress(int id) {
-	//let the OS know to change screens
-	xTaskNotify(changeScreenTaskHandle, MAIN_MENU, eSetValueWithOverwrite);
-}
 /* USER CODE END 4 */
 
 /* USER CODE BEGIN Header_StartDefaultTask */
@@ -559,10 +471,7 @@ void StartDefaultTask(void const * argument)
   /* Infinite loop */
   for(;;)
   {
-	  //Do a display refresh
-		DM_Draw();
-		HAL_GPIO_TogglePin(PWR_LED_GPIO_Port, PWR_LED_Pin);
-		osDelay(100);
+
   }
   /* USER CODE END 5 */
 }

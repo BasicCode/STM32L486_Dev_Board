@@ -9,6 +9,7 @@
 #define INC_DISPLAYMANAGER_H_
 
 #include "stm32l4xx_hal.h"
+#include "DevBoard.h"
 #include "drivers/FT5446.h"
 
 //Possible states (usually for a button)
@@ -31,7 +32,8 @@ typedef enum {
 	LIST,
 	ANIMATION,
 	NUMPAD,
-	KEYBOARD
+	KEYBOARD,
+	TEXTBOX
 } Type;
 //Refresh frequency of the element
 typedef enum {
@@ -65,6 +67,8 @@ struct DisplayElement {
 	char				*text;			//Pointer to the body text string
 	State				state;			//The state of the element (see State definition above).
 	State				oldState;		//A way to determine if the element needs refreshing. Shouldn't be needed by user.
+	int					canFocus;		//This element can take "focus" on the screen, like a text box.
+	int					maxLength;		//Maximum length or size of this element (like a string length or something)
 	Refresh				refresh;		//How often to refresh the element (see RefreshFrequency)
 	Draw				draw;			//Pointer to the function which draws the element
 	onPress				onPress;		//Pointer for the funciton to call if a tap or press is registered
@@ -88,6 +92,9 @@ typedef enum {
 
 //The array of screen elements - Declared in the parent C file
 extern struct DisplayElement elements[MAX_ELEMENTS];
+//The current focused element
+extern int focusedElement;
+extern int oldFocusedElement;
 
 //Default ticks per frame for animations
 #define TICKS_PER_FRAME 2
@@ -110,5 +117,7 @@ void DM_Remove_Element(int id);
 struct DisplayElement DM_Get_Element(int id);
 int DM_Parse_Press(int x, int y);
 int DM_Do_Press(struct Touch touch);
+
+struct DisplayElement getDefaultElement();
 
 #endif /* INC_DISPLAYMANAGER_H_ */

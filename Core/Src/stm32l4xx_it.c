@@ -22,6 +22,9 @@
 #include "stm32l4xx_it.h"
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+
+#include "DevBoard.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -167,7 +170,9 @@ void EXTI9_5_IRQHandler(void)
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
 
 	  /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-		osSignalSet(touchTaskHandle, 0x01);
+
+	//Touch screen interrupt has occured. Notify the touch screen thread.
+	xTaskNotifyFromISR( touchTaskHandle, 0, eSetValueWithOverwrite, pdFALSE);
 
   /* USER CODE END EXTI9_5_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(CTP_INT_Pin);

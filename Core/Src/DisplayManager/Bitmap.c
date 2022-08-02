@@ -19,7 +19,7 @@ void DM_Bitmap_With_Alpha(int id);
  * Create a bitmap element and add it to the queue.
  */
 struct DisplayElement DM_New_Bitmap(int x, int y, int scale, const unsigned int *src){
-	  struct DisplayElement bitmap;
+	  struct DisplayElement bitmap = getDefaultElement();
 	  bitmap.type = BITMAP;
 	  bitmap.x1 = x; bitmap.y1 = y;
 	  //Calculate the bitmap size for proper collision detection

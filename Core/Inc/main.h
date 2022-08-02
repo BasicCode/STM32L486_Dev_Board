@@ -38,29 +38,6 @@ extern "C" {
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
 
-//Screen handles, and identifiers - List your screens here
-typedef enum {
-	DEVICE_TEST,
-	HOME,
-	MAIN_MENU,
-	SETTINGS
-} Screens;
-
-
-//Screen dimensions
-#define WIDTH 480
-#define HEIGHT 320
-
-//Direction of some elements
-typedef enum {
-	HORIZONTAL,
-	VERTICAL
-} Orientation;
-
-
-//Handles for threads which need to receive signals from external sources.
-extern osThreadId touchTaskHandle;
-extern osThreadId changeScreenTaskHandle;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -77,7 +54,6 @@ extern osThreadId changeScreenTaskHandle;
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-void home_onPress(int id);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

@@ -1,4 +1,4 @@
-../Core/Src/DisplayManager/Text.c:20:23:DM_New_Text	112	static
+../Core/Src/DisplayManager/Text.c:20:23:DM_New_Text	120	static
 ../Core/Src/DisplayManager/Text.c:35:6:DM_Text	40	static
-../Core/Src/DisplayManager/Text.c:38:23:DM_New_Fast_Text	112	static
+../Core/Src/DisplayManager/Text.c:38:23:DM_New_Fast_Text	120	static
 ../Core/Src/DisplayManager/Text.c:53:6:DM_Fast_Text	40	static

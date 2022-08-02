@@ -1,0 +1,3 @@
+../Core/Src/DisplayManager/TextBox.c:21:23:DM_New_TextBox	120	static
+../Core/Src/DisplayManager/TextBox.c:40:6:DM_TextBox	48	static
+../Core/Src/DisplayManager/TextBox.c:76:6:DM_TextBox_onPress	192	static

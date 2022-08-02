@@ -1,4 +1,5 @@
-../Core/Src/DisplayManager/NumPad.c:23:23:DM_New_NumPad	96	static
-../Core/Src/DisplayManager/NumPad.c:42:6:DM_NumPad	40	static
-../Core/Src/DisplayManager/NumPad.c:82:6:DM_NumPad_Button	64	static
-../Core/Src/DisplayManager/NumPad.c:117:6:DM_NumPad_onPress	48	static
+../Core/Src/DisplayManager/NumPad.c:24:23:DM_New_NumPad	112	static
+../Core/Src/DisplayManager/NumPad.c:44:6:DM_NumPad	40	static
+../Core/Src/DisplayManager/NumPad.c:84:6:DM_NumPad_Button	64	static
+../Core/Src/DisplayManager/NumPad.c:119:6:DM_NumPad_onPress	48	static
+../Core/Src/DisplayManager/NumPad.c:149:6:updateTextBox	24	static

@@ -29,7 +29,7 @@ struct DisplayElement DM_New_Button(int x, int y, char *text, State state){
 		if(x > BTN_MIDDLE_X)
 			x = WIDTH - width - 10;
 	}
-	struct DisplayElement button;
+	struct DisplayElement button = getDefaultElement();
 	button.type = BUTTON;
 	button.x1 = x; button.y1 = y; button.x2 = x + width; button.y2 = y + height;
 	button.text = text;

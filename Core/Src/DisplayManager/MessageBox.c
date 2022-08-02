@@ -19,7 +19,7 @@ void DM_MessageBox(int id);
 struct DisplayElement DM_New_MessageBox(char *title, char *text) {
 	const int width = 300;
 	const int height = 166;
-	struct DisplayElement messageBox;
+	struct DisplayElement messageBox = getDefaultElement();
 	messageBox.type = MESSAGEBOX;
 	messageBox.x1 = (int) ((WIDTH - width) / 2);
 	messageBox.y1 = (int) ((HEIGHT - height) / 2);

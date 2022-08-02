@@ -18,7 +18,7 @@ void DM_Fast_Text(int id);
  * Various string drawing elements. Just puts the string on teh screen with nothing extra.
  */
 struct DisplayElement DM_New_Text(int x, int y, int colour, int size, char* text){
-	struct DisplayElement string;
+	struct DisplayElement string = getDefaultElement();
 	string.type = TEXT;
 	string.x1 = x; string.y1 = y;
 	//Have to calculate the length to make a prpoer hit box
@@ -36,7 +36,7 @@ void DM_Text(int id){
 	draw_string(elements[id].x1, elements[id].y1, elements[id].colour, elements[id].size, elements[id].text);
 }
 struct DisplayElement DM_New_Fast_Text(int x, int y, int colour, int backgroundColour, char* text){
-	struct DisplayElement string;
+	struct DisplayElement string = getDefaultElement();
 	string.type = FASTTEXT;
 	string.x1 = x; string.y1 = y;
 	//Have to calculate the length to make a prpoer hit box

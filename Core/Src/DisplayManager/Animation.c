@@ -22,7 +22,7 @@ void DM_Animation(int id);
  * numChildren - the number of frames in the array
  */
 struct DisplayElement DM_New_Animation(int x1, int y1, int scale, unsigned int **bitmaps, int numFrames) {
-	struct DisplayElement animation;
+	struct DisplayElement animation = getDefaultElement();
 	animation.type = ANIMATION;
 	animation.x1 = x1; animation.y1 = y1;
 	//Get the animation dimensions

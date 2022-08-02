@@ -8,6 +8,8 @@
  */
 
 #include "screens/HomeScreen.h"
+#include "DevBoard.h"
+
 //Display Manager
 #include "DisplayManager/DisplayManager.h"
 #include "DisplayManager/Button.h"
@@ -80,11 +82,6 @@ void MainMenuTask(void const * arguments) {
 
 	//The main loop
 	while(1) {
-		//Get the time from the RTC once per second
-		struct Time thisTime = RTC_get_time_date();
-		char timeString[7];
-		sprintf(timeString, "%2d%2d%2d", thisTime.hours, thisTime.minutes, thisTime.seconds);
-
 		//Update the bitmaps with the new time
 		//check if we need to update the whole lot, or just seconds
 		if(oldMin != timeString[3]) {

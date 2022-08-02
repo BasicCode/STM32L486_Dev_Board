@@ -1,6 +1,5 @@
 Core/Src/DisplayManager/DisplayManager.o: \
  ../Core/Src/DisplayManager/DisplayManager.c \
- ../Core/Inc/DisplayManager/Fill.h \
  ../Core/Inc/DisplayManager/DisplayManager.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
@@ -36,7 +35,7 @@ Core/Src/DisplayManager/DisplayManager.o: \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- ../Core/Inc/drivers/FT5446.h ../Core/Inc/main.h \
+ ../Core/Inc/DevBoard.h ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h \
  ../Core/Inc/FreeRTOSConfig.h \
@@ -54,8 +53,10 @@ Core/Src/DisplayManager/DisplayManager.o: \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Inc/drivers/ILI9488.h
-../Core/Inc/DisplayManager/Fill.h:
+ ../Core/Inc/drivers/DS3231.h ../Core/Inc/drivers/FT5446.h \
+ ../Core/Inc/main.h ../Core/Inc/DisplayManager/Fill.h \
+ ../Core/Inc/DisplayManager/NumPad.h ../Core/Inc/DisplayManager/Button.h \
+ ../Core/Inc/DisplayManager/List.h ../Core/Inc/drivers/ILI9488.h
 ../Core/Inc/DisplayManager/DisplayManager.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -91,7 +92,7 @@ Core/Src/DisplayManager/DisplayManager.o: \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
-../Core/Inc/drivers/FT5446.h:
+../Core/Inc/DevBoard.h:
 ../Core/Inc/main.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
@@ -110,4 +111,11 @@ Core/Src/DisplayManager/DisplayManager.o: \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
+../Core/Inc/drivers/DS3231.h:
+../Core/Inc/drivers/FT5446.h:
+../Core/Inc/main.h:
+../Core/Inc/DisplayManager/Fill.h:
+../Core/Inc/DisplayManager/NumPad.h:
+../Core/Inc/DisplayManager/Button.h:
+../Core/Inc/DisplayManager/List.h:
 ../Core/Inc/drivers/ILI9488.h:
