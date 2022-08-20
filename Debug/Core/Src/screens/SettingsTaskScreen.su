@@ -1,1 +1,3 @@
-../Core/Src/screens/SettingsTaskScreen.c:34:6:SettingsTask	568	static
+../Core/Src/screens/SettingsTaskScreen.c:30:6:SettingsTask	472	static
+../Core/Src/screens/SettingsTaskScreen.c:56:6:changeTime_onPress	16	static
+../Core/Src/screens/SettingsTaskScreen.c:68:6:deviceTest_onPress	16	static

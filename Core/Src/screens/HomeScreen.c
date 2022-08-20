@@ -14,7 +14,9 @@
 #include "DisplayManager/DisplayManager.h"
 #include "DisplayManager/Button.h"
 #include "DisplayManager/Bitmap.h"
+#include "DisplayManager/Animation.h"
 #include "DisplayManager/Fill.h"
+#include "DisplayManager/Text.h"
 
 #include "colours.h"
 #include "drivers/DS3231.h"
@@ -24,9 +26,12 @@
 #include "bitmaps/loading.h"
 
 //Private functions
-void deviceTest_onPress(int id);
 void settingsScreen_onPress(int id);
 unsigned int* Char_To_Bmp(char c);
+
+//Where the human-readable date string is stored.
+char fancyDateString[32];
+int dateTextId;
 
 /**
  * The main display which is currently a clock. Called Main Menu
@@ -34,7 +39,11 @@ unsigned int* Char_To_Bmp(char c);
  */
 void MainMenuTask(void const * arguments) {
 
-	const unsigned int textColour = COLOR_BLACK;
+	const unsigned int textColour = COLOR_LIGHTGRAY;
+
+	//Put the current date at the top of the screen
+	sprintf(fancyDateString, "%s %d / %d / %d", dayName[time.weekday], time.day, time.month, time.year);
+	dateTextId = DM_Add_Element(DM_New_Fast_Text(150, 10, textColour, COLOR_WHITE, fancyDateString));
 
 	//Double gradient effect
 	DM_Add_Element(DM_New_Fill_Gradient(0, 90, WIDTH, 120, COLOR_WHITE, COLOR_BLACK, VERTICAL));
@@ -67,13 +76,8 @@ void MainMenuTask(void const * arguments) {
 	int digit5Id = DM_Add_Element(digit5);
 	int digit6Id = DM_Add_Element(digit6);
 
-	//Button for the device test
-	struct DisplayElement button1 = DM_New_Button(BTN_RIGHT_X, BTN_BOTTOM_Y, "Test Device", ENABLED);
-	button1.onPress = deviceTest_onPress;
-	DM_Add_Element(button1);
-
 	//Button for settings
-	struct DisplayElement button2 = DM_New_Button(BTN_LEFT_X, BTN_BOTTOM_Y, "Settings", ENABLED);
+	struct DisplayElement button2 = DM_New_Button(BTN_MIDDLE_X, BTN_BOTTOM_Y, "MENU", ENABLED);
 	button2.onPress = settingsScreen_onPress;
 	DM_Add_Element(button2);
 
@@ -96,6 +100,10 @@ void MainMenuTask(void const * arguments) {
 			DM_Replace_Element(digit3Id, digit3);
 			DM_Replace_Element(colon2Id, colon2);
 			DM_Replace_Element(digit4Id, digit4);
+
+			//Update the date string and register the text for update
+			sprintf(fancyDateString, "%s %d / %d / %d", dayName[time.weekday], time.day, time.month, time.year);
+			DM_Refresh_Element(dateTextId);
 		}
 		//Update the seconds componetnts
 		digit5.bitmap = Char_To_Bmp(timeString[4]);
@@ -108,15 +116,6 @@ void MainMenuTask(void const * arguments) {
 
 		osDelay(1000);
 	}
-}
-
-/**
- * Callback for the Test Device button
- */
-void deviceTest_onPress(int id) {
-
-	//let the OS know to change screens
-	xTaskNotify(changeScreenTaskHandle, DEVICE_TEST, eSetValueWithOverwrite);
 }
 
 /**
@@ -140,32 +139,6 @@ void SplashScreenTask(void const * arguments) {
 	DFPlayer_resetModule();
 	//Wait for the device to reset... It's slow
 	osDelay(1000);
-	//Test communication with the player
-    int status = DFPlayer_getStatus();
-    int timeout = 10;
-    int songs = 0;
-    while(timeout--) {
-    	songs = DFPlayer_getTracksInFolder(0);
-    	if(songs > 0)
-    		break;
-    }
-    char numSongs[64];
-    sprintf(numSongs, "DFPlayer Status: %d, with %d songs.", status, songs);
-
-
-	//Make a list of I2C devices
-	char deviceString[128] = "I2C Devices:";
-	for(char i = 0; i < 128; i++) {
-		if(HAL_I2C_IsDeviceReady (&hi2c1, i << 1, 10, 250) == HAL_OK) {
-			sprintf(deviceString, "%s %d", deviceString, i);
-		}
-	}
-
-	//Confirm communication with the RTC
-	struct Time thisTime = RTC_get_time_date();
-	char timeDateString[128];
-	sprintf(timeDateString, "%s %d / %d / %d %d:%d:%d", dayName[thisTime.weekday], thisTime.day,
-			thisTime.month, thisTime.year, thisTime.hours, thisTime.minutes, thisTime.seconds);
 
 	//switch to the main menu
 	xTaskNotify(changeScreenTaskHandle, MAIN_MENU, eSetValueWithOverwrite);

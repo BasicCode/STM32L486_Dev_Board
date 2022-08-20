@@ -19,7 +19,8 @@ typedef enum {
 	DEVICE_TEST,
 	HOME,
 	MAIN_MENU,
-	SETTINGS
+	SETTINGS,
+	CHANGE_TIME_DATE
 } Screens;
 
 

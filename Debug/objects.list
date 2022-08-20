@@ -23,6 +23,7 @@
 "./Core/Src/drivers/DS3231.o"
 "./Core/Src/drivers/FT5446.o"
 "./Core/Src/drivers/ILI9488.o"
+"./Core/Src/screens/ChangeTimeScreen.o"
 "./Core/Src/screens/DeviceTestScreen.o"
 "./Core/Src/screens/HomeScreen.o"
 "./Core/Src/screens/SettingsTaskScreen.o"

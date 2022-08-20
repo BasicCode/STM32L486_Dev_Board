@@ -59,7 +59,7 @@ Core/Src/screens/SettingsTaskScreen.o: \
  ../Core/Inc/DisplayManager/TextBox.h \
  ../Core/Inc/DisplayManager/TitleBar.h \
  ../Core/Inc/DisplayManager/Animation.h ../Core/Inc/DisplayManager/Fill.h \
- ../Core/Inc/bitmaps/loading.h
+ ../Core/Inc/bitmaps/loading.h ../Core/Inc/drivers/DS3231.h
 ../Core/Inc/screens/SettingsTaskScreen.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
@@ -127,3 +127,4 @@ Core/Src/screens/SettingsTaskScreen.o: \
 ../Core/Inc/DisplayManager/Animation.h:
 ../Core/Inc/DisplayManager/Fill.h:
 ../Core/Inc/bitmaps/loading.h:
+../Core/Inc/drivers/DS3231.h:

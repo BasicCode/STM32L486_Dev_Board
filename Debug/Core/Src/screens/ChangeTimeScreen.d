@@ -1,4 +1,6 @@
-Core/Src/DevBoard.o: ../Core/Src/DevBoard.c ../Core/Inc/DevBoard.h \
+Core/Src/screens/ChangeTimeScreen.o: \
+ ../Core/Src/screens/ChangeTimeScreen.c \
+ ../Core/Inc/screens/ChangeTimeScreen.h ../Core/Inc/DevBoard.h \
  ../Core/Inc/main.h ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
@@ -50,12 +52,15 @@ Core/Src/DevBoard.o: ../Core/Src/DevBoard.c ../Core/Inc/DevBoard.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- ../Core/Inc/drivers/DS3231.h ../Core/Inc/DisplayManager/DisplayManager.h \
- ../Core/Inc/drivers/FT5446.h ../Core/Inc/main.h ../Core/Inc/colours.h \
- ../Core/Inc/drivers/DS3231.h ../Core/Inc/screens/DeviceTestScreen.h \
- ../Core/Inc/screens/HomeScreen.h \
- ../Core/Inc/screens/SettingsTaskScreen.h \
- ../Core/Inc/screens/ChangeTimeScreen.h
+ ../Core/Inc/drivers/DS3231.h ../Core/Inc/colours.h \
+ ../Core/Inc/DisplayManager/DisplayManager.h ../Core/Inc/drivers/FT5446.h \
+ ../Core/Inc/main.h ../Core/Inc/DisplayManager/NumPad.h \
+ ../Core/Inc/DisplayManager/Button.h ../Core/Inc/DisplayManager/Text.h \
+ ../Core/Inc/DisplayManager/TextBox.h \
+ ../Core/Inc/DisplayManager/TitleBar.h \
+ ../Core/Inc/DisplayManager/Animation.h ../Core/Inc/DisplayManager/Fill.h \
+ ../Core/Inc/bitmaps/loading.h ../Core/Inc/drivers/DS3231.h
+../Core/Inc/screens/ChangeTimeScreen.h:
 ../Core/Inc/DevBoard.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
@@ -110,12 +115,16 @@ Core/Src/DevBoard.o: ../Core/Src/DevBoard.c ../Core/Inc/DevBoard.h \
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 ../Core/Inc/drivers/DS3231.h:
+../Core/Inc/colours.h:
 ../Core/Inc/DisplayManager/DisplayManager.h:
 ../Core/Inc/drivers/FT5446.h:
 ../Core/Inc/main.h:
-../Core/Inc/colours.h:
+../Core/Inc/DisplayManager/NumPad.h:
+../Core/Inc/DisplayManager/Button.h:
+../Core/Inc/DisplayManager/Text.h:
+../Core/Inc/DisplayManager/TextBox.h:
+../Core/Inc/DisplayManager/TitleBar.h:
+../Core/Inc/DisplayManager/Animation.h:
+../Core/Inc/DisplayManager/Fill.h:
+../Core/Inc/bitmaps/loading.h:
 ../Core/Inc/drivers/DS3231.h:
-../Core/Inc/screens/DeviceTestScreen.h:
-../Core/Inc/screens/HomeScreen.h:
-../Core/Inc/screens/SettingsTaskScreen.h:
-../Core/Inc/screens/ChangeTimeScreen.h:

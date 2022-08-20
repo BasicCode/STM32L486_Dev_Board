@@ -18,6 +18,7 @@
 #include "screens/DeviceTestScreen.h"
 #include "screens/HomeScreen.h"
 #include "screens/SettingsTaskScreen.h"
+#include "screens/ChangeTimeScreen.h"
 
 //Thread handles
 osThreadId drawTaskHandle; //Handle to the task which re-draws the display
@@ -49,6 +50,8 @@ void DevBoardBegin() {
 	//Get the current time from the RTC chip
 	osThreadDef(timeTask, TimeTask, osPriorityNormal, 0, 128);
 	timeTaskHandle = osThreadCreate(osThread(timeTask), NULL);
+
+	return;
 }
 
 /**
@@ -77,7 +80,8 @@ void ChangeScreenTask(void const * arguments) {
 	osThreadDef(deviceTestTask, DeviceTestTask, osPriorityNormal, 0, 1024);
 	osThreadDef(mainMenuTask, MainMenuTask, osPriorityNormal, 0, 512);
 	osThreadDef(splashScreenTask, SplashScreenTask, osPriorityNormal, 0, 256);
-	osThreadDef(settingsTask, SettingsTask, osPriorityNormal, 0, 1028);
+	osThreadDef(settingsTask, SettingsTask, osPriorityNormal, 0, 512);
+	osThreadDef(changeTimeTask, ChangeTimeTask, osPriorityNormal, 0, 512);
 
 	//Initial entry screen
 	currentScreenHandle = osThreadCreate(osThread(mainMenuTask), NULL);
@@ -104,6 +108,10 @@ void ChangeScreenTask(void const * arguments) {
 
 				if(signal == SETTINGS)
 					currentScreenHandle = osThreadCreate(osThread(settingsTask), NULL);
+
+				if(signal == CHANGE_TIME_DATE)
+					currentScreenHandle = osThreadCreate(osThread(changeTimeTask), NULL);
+
 	    }
 
 		//Give the OS time to do some other tasks
@@ -157,4 +165,6 @@ void TimeTask(void const * argument) {
 void home_onPress(int id) {
 	//let the OS know to change screens
 	xTaskNotify(changeScreenTaskHandle, MAIN_MENU, eSetValueWithOverwrite);
+
+	return;
 }

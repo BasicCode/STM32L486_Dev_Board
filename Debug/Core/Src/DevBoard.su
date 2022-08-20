@@ -1,6 +1,6 @@
-../Core/Src/DevBoard.c:36:6:DevBoardBegin	128	static
-../Core/Src/DevBoard.c:59:6:DrawTask	16	static
-../Core/Src/DevBoard.c:74:6:ChangeScreenTask	120	static
-../Core/Src/DevBoard.c:117:6:TouchTask	48	static
-../Core/Src/DevBoard.c:142:6:TimeTask	48	static
-../Core/Src/DevBoard.c:157:6:home_onPress	16	static
+../Core/Src/DevBoard.c:37:6:DevBoardBegin	128	static
+../Core/Src/DevBoard.c:62:6:DrawTask	16	static
+../Core/Src/DevBoard.c:77:6:ChangeScreenTask	144	static
+../Core/Src/DevBoard.c:125:6:TouchTask	48	static
+../Core/Src/DevBoard.c:150:6:TimeTask	48	static
+../Core/Src/DevBoard.c:165:6:home_onPress	16	static

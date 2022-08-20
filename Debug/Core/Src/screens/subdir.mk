@@ -5,16 +5,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/Src/screens/ChangeTimeScreen.c \
 ../Core/Src/screens/DeviceTestScreen.c \
 ../Core/Src/screens/HomeScreen.c \
 ../Core/Src/screens/SettingsTaskScreen.c 
 
 C_DEPS += \
+./Core/Src/screens/ChangeTimeScreen.d \
 ./Core/Src/screens/DeviceTestScreen.d \
 ./Core/Src/screens/HomeScreen.d \
 ./Core/Src/screens/SettingsTaskScreen.d 
 
 OBJS += \
+./Core/Src/screens/ChangeTimeScreen.o \
 ./Core/Src/screens/DeviceTestScreen.o \
 ./Core/Src/screens/HomeScreen.o \
 ./Core/Src/screens/SettingsTaskScreen.o 
@@ -27,7 +30,7 @@ Core/Src/screens/%.o Core/Src/screens/%.su: ../Core/Src/screens/%.c Core/Src/scr
 clean: clean-Core-2f-Src-2f-screens
 
 clean-Core-2f-Src-2f-screens:
-	-$(RM) ./Core/Src/screens/DeviceTestScreen.d ./Core/Src/screens/DeviceTestScreen.o ./Core/Src/screens/DeviceTestScreen.su ./Core/Src/screens/HomeScreen.d ./Core/Src/screens/HomeScreen.o ./Core/Src/screens/HomeScreen.su ./Core/Src/screens/SettingsTaskScreen.d ./Core/Src/screens/SettingsTaskScreen.o ./Core/Src/screens/SettingsTaskScreen.su
+	-$(RM) ./Core/Src/screens/ChangeTimeScreen.d ./Core/Src/screens/ChangeTimeScreen.o ./Core/Src/screens/ChangeTimeScreen.su ./Core/Src/screens/DeviceTestScreen.d ./Core/Src/screens/DeviceTestScreen.o ./Core/Src/screens/DeviceTestScreen.su ./Core/Src/screens/HomeScreen.d ./Core/Src/screens/HomeScreen.o ./Core/Src/screens/HomeScreen.su ./Core/Src/screens/SettingsTaskScreen.d ./Core/Src/screens/SettingsTaskScreen.o ./Core/Src/screens/SettingsTaskScreen.su
 
 .PHONY: clean-Core-2f-Src-2f-screens
 
