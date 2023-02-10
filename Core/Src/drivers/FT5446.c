@@ -8,6 +8,21 @@
 
 #include "drivers/FT5446.h"
 
+/**
+ * Initialisation routine for the FT5446 module
+ */
+void FT5446_init() {
+	//set auto calibration. The datasheet isn't really clear how this works
+	HAL_I2C_Mem_Write(&hi2c1, FT5446_ADDR << 1, FT5446_CALIB_ADDR, I2C_MEMADD_SIZE_8BIT, 0x00, 1, 250);
+	//Enter auto calibration mode
+	HAL_I2C_Mem_Write(&hi2c1, FT5446_ADDR << 1, FT5446_STATE_ADDR, I2C_MEMADD_SIZE_8BIT, FT5446_AUTO_CALIB, 1, 250);
+
+	//some mystery undocumented delay
+	HAL_Delay(100);
+	//Return to normal mode
+	HAL_I2C_Mem_Write(&hi2c1, FT5446_ADDR << 1, FT5446_STATE_ADDR, I2C_MEMADD_SIZE_8BIT, FT5446_WORK_MODE, 1, 250);
+}
+
 struct Touch FT5446_getTouch() {
 	struct Touch touch;
 	unsigned char touchData[6];

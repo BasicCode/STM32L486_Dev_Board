@@ -19,8 +19,10 @@
 #include "screens/HomeScreen.h"
 #include "screens/SettingsTaskScreen.h"
 #include "screens/ChangeTimeScreen.h"
+#include "screens/EditTimerScreen.h"
+#include "screens/TimerListScreen.h"
 
-//Thread handles
+//Thread handles for threads which always run
 osThreadId drawTaskHandle; //Handle to the task which re-draws the display
 osThreadId currentScreenHandle; //Handle to the thread drawing the current screen
 osThreadId changeScreenTaskHandle; //Thraed which handles screen changes
@@ -31,16 +33,34 @@ osThreadId timeTaskHandle; //Reads the DS3231 RTC chip and updates the global ti
 struct Time time;
 char timeString[9];
 
+//Global array of Timers
+struct Timer timers[64];
+
+//Mutexes
+osMutexId I2CMutex_ID;
+osMutexId touchMutex_ID;
+
 /**
  * Initialises the threads which run the various peripherals on this board.
  */
 void DevBoardBegin() {
+
+	/*
+	 * Mutexes
+	 */
+	//I2C needs a mutex because it's shared by the RTC and CTP
+	osMutexDef(I2CMutex);
+	I2CMutex_ID = osMutexCreate(osMutex(I2CMutex));
+
+	/*
+	 * Tasks
+	 */
 	//The draw task handles display updates. It should be a HIGH priority for fast refresh.
 	osThreadDef(drawTask, DrawTask, osPriorityHigh, 0, 1024);
 	drawTaskHandle = osThreadCreate(osThread(drawTask), NULL);
 
 	//Task which handles switching screens
-	osThreadDef(changeScreenTask, ChangeScreenTask, osPriorityNormal, 0, 512);
+	osThreadDef(changeScreenTask, ChangeScreenTask, osPriorityNormal, 0, 128);
 	changeScreenTaskHandle = osThreadCreate(osThread(changeScreenTask), NULL);
 
 	//This task handles touching
@@ -66,6 +86,7 @@ void DrawTask(void const * argument)
 		//Do a display refresh
 		DM_Draw();
 		//This is a HIGH priority task so we have to hand control back to the OS.
+		//Also sets the refresh rate
 		osDelay(100);
 	}
 }
@@ -82,6 +103,8 @@ void ChangeScreenTask(void const * arguments) {
 	osThreadDef(splashScreenTask, SplashScreenTask, osPriorityNormal, 0, 256);
 	osThreadDef(settingsTask, SettingsTask, osPriorityNormal, 0, 512);
 	osThreadDef(changeTimeTask, ChangeTimeTask, osPriorityNormal, 0, 512);
+	osThreadDef(editTimerTask, EditTimerTask, osPriorityNormal, 0, 1024);
+	osThreadDef(timerListTask, TimerListTask, osPriorityNormal, 0, 1024);
 
 	//Initial entry screen
 	currentScreenHandle = osThreadCreate(osThread(mainMenuTask), NULL);
@@ -112,10 +135,16 @@ void ChangeScreenTask(void const * arguments) {
 				if(signal == CHANGE_TIME_DATE)
 					currentScreenHandle = osThreadCreate(osThread(changeTimeTask), NULL);
 
+				if(signal == EDIT_TIMER)
+					currentScreenHandle = osThreadCreate(osThread(editTimerTask), NULL);
+
+				if(signal == TIMER_LIST)
+					currentScreenHandle = osThreadCreate(osThread(timerListTask), NULL);
+
 	    }
 
 		//Give the OS time to do some other tasks
-		osDelay(200);
+		osThreadYield();
 	}
 }
 
@@ -127,6 +156,7 @@ void TouchTask(void const * argument) {
 	struct Touch touch;
 	int event;
 	int signal;
+	int I2CMutexStatus;
 
 	for(;;) {
 	    // wait for a signal
@@ -135,12 +165,20 @@ void TouchTask(void const * argument) {
 	    //Signal received, get the touch coordinates
 	    if (event == pdTRUE)  {
 
-	    	//Get the most recent touch point
-	    	touch = FT5446_getTouch();
+	    	//Check the peripheral is releated by the OS
+	        I2CMutexStatus  = osMutexWait(I2CMutex_ID, 250);
+	        if (I2CMutexStatus == osOK)  {
+	            //Get the most recent touch point
+				touch = FT5446_getTouch();
+	        }
+	        //Release the I2C mutex
+	        osMutexRelease(I2CMutex_ID);
 
 	    	//Envoke the pressed element
 			DM_Do_Press(touch);
 	    }
+
+	    osThreadYield();
 	}
 }
 
@@ -148,10 +186,17 @@ void TouchTask(void const * argument) {
  * Gets the time from the DS3231 RTC and updates the global time
  */
 void TimeTask(void const * argument) {
+	int mutexStatus;
 
 	while(1) {
-		//Get the time from the RTC once per second
-		time = RTC_get_time_date();
+    	//Take the mutex and prevent anything else from touching the bus
+        mutexStatus  = osMutexWait(I2CMutex_ID, 250);
+        if (mutexStatus == osOK)  {
+			//Get the time from the RTC once per second
+			time = RTC_get_time_date();
+        }
+        mutexStatus = osMutexRelease(I2CMutex_ID);
+
 		sprintf(timeString, "%2d%2d%2d", time.hours, time.minutes, time.seconds);
 
 		//Hand control back to the RTOS

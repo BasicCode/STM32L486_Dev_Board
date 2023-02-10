@@ -1,2 +1,3 @@
-../Core/Src/DisplayManager/TitleBar.c:19:23:DM_New_Title_Bar	112	static
-../Core/Src/DisplayManager/TitleBar.c:31:6:DM_Title_Bar	56	static
+../Core/Src/DisplayManager/TitleBar.c:21:23:DM_New_Title_Bar	112	static
+../Core/Src/DisplayManager/TitleBar.c:33:6:DM_Title_Bar	64	static
+../Core/Src/DisplayManager/TitleBar.c:56:6:DM_Title_Bar_onPress	32	static

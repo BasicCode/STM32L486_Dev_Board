@@ -46,16 +46,16 @@ struct DisplayElement DM_New_Button(int x, int y, char *text, State state){
  * A button looking thing
  */
 void DM_Button(int id) {
-	int outlineColour = COLOR_GRAY;
-	int fillColour = COLOR_LIGHTGRAY;
-	int textColour = COLOR_BLACK;
+	int outlineColour = PRIMARY_COLOUR;
+	int fillColour = PRIMARY_COLOUR;
+	int textColour = COLOR_WHITE;
 	if(elements[id].state == DISABLED) {
 		fillColour = COLOR_WHITE;
 		outlineColour = COLOR_LIGHTGRAY;
 		textColour = COLOR_LIGHTGRAY;
 	}
 	if(elements[id].state == SELECTED) {
-		fillColour = COLOR_LIGHTBLUE;
+		fillColour = PRIMARY_COLOUR_SELECTED;
 	}
 	//Draw the background
 	fill_rectangle(elements[id].x1 + 1, elements[id].y1 + 1, elements[id].x2 - 1, elements[id].y2 - 1, fillColour);

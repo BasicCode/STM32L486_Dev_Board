@@ -56,7 +56,8 @@ Core/Src/DisplayManager/DisplayManager.o: \
  ../Core/Inc/drivers/DS3231.h ../Core/Inc/drivers/FT5446.h \
  ../Core/Inc/main.h ../Core/Inc/DisplayManager/Fill.h \
  ../Core/Inc/DisplayManager/NumPad.h ../Core/Inc/DisplayManager/Button.h \
- ../Core/Inc/DisplayManager/List.h ../Core/Inc/drivers/ILI9488.h
+ ../Core/Inc/DisplayManager/List.h ../Core/Inc/DisplayManager/TickBox.h \
+ ../Core/Inc/DisplayManager/TitleBar.h ../Core/Inc/drivers/ILI9488.h
 ../Core/Inc/DisplayManager/DisplayManager.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -118,4 +119,6 @@ Core/Src/DisplayManager/DisplayManager.o: \
 ../Core/Inc/DisplayManager/NumPad.h:
 ../Core/Inc/DisplayManager/Button.h:
 ../Core/Inc/DisplayManager/List.h:
+../Core/Inc/DisplayManager/TickBox.h:
+../Core/Inc/DisplayManager/TitleBar.h:
 ../Core/Inc/drivers/ILI9488.h:

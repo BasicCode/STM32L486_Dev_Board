@@ -15,6 +15,7 @@ C_SRCS += \
 ../Core/Src/DisplayManager/NumPad.c \
 ../Core/Src/DisplayManager/Text.c \
 ../Core/Src/DisplayManager/TextBox.c \
+../Core/Src/DisplayManager/TickBox.c \
 ../Core/Src/DisplayManager/TitleBar.c 
 
 C_DEPS += \
@@ -28,6 +29,7 @@ C_DEPS += \
 ./Core/Src/DisplayManager/NumPad.d \
 ./Core/Src/DisplayManager/Text.d \
 ./Core/Src/DisplayManager/TextBox.d \
+./Core/Src/DisplayManager/TickBox.d \
 ./Core/Src/DisplayManager/TitleBar.d 
 
 OBJS += \
@@ -41,6 +43,7 @@ OBJS += \
 ./Core/Src/DisplayManager/NumPad.o \
 ./Core/Src/DisplayManager/Text.o \
 ./Core/Src/DisplayManager/TextBox.o \
+./Core/Src/DisplayManager/TickBox.o \
 ./Core/Src/DisplayManager/TitleBar.o 
 
 
@@ -51,7 +54,7 @@ Core/Src/DisplayManager/%.o Core/Src/DisplayManager/%.su: ../Core/Src/DisplayMan
 clean: clean-Core-2f-Src-2f-DisplayManager
 
 clean-Core-2f-Src-2f-DisplayManager:
-	-$(RM) ./Core/Src/DisplayManager/Animation.d ./Core/Src/DisplayManager/Animation.o ./Core/Src/DisplayManager/Animation.su ./Core/Src/DisplayManager/Bitmap.d ./Core/Src/DisplayManager/Bitmap.o ./Core/Src/DisplayManager/Bitmap.su ./Core/Src/DisplayManager/Button.d ./Core/Src/DisplayManager/Button.o ./Core/Src/DisplayManager/Button.su ./Core/Src/DisplayManager/DisplayManager.d ./Core/Src/DisplayManager/DisplayManager.o ./Core/Src/DisplayManager/DisplayManager.su ./Core/Src/DisplayManager/Fill.d ./Core/Src/DisplayManager/Fill.o ./Core/Src/DisplayManager/Fill.su ./Core/Src/DisplayManager/List.d ./Core/Src/DisplayManager/List.o ./Core/Src/DisplayManager/List.su ./Core/Src/DisplayManager/MessageBox.d ./Core/Src/DisplayManager/MessageBox.o ./Core/Src/DisplayManager/MessageBox.su ./Core/Src/DisplayManager/NumPad.d ./Core/Src/DisplayManager/NumPad.o ./Core/Src/DisplayManager/NumPad.su ./Core/Src/DisplayManager/Text.d ./Core/Src/DisplayManager/Text.o ./Core/Src/DisplayManager/Text.su ./Core/Src/DisplayManager/TextBox.d ./Core/Src/DisplayManager/TextBox.o ./Core/Src/DisplayManager/TextBox.su ./Core/Src/DisplayManager/TitleBar.d ./Core/Src/DisplayManager/TitleBar.o ./Core/Src/DisplayManager/TitleBar.su
+	-$(RM) ./Core/Src/DisplayManager/Animation.d ./Core/Src/DisplayManager/Animation.o ./Core/Src/DisplayManager/Animation.su ./Core/Src/DisplayManager/Bitmap.d ./Core/Src/DisplayManager/Bitmap.o ./Core/Src/DisplayManager/Bitmap.su ./Core/Src/DisplayManager/Button.d ./Core/Src/DisplayManager/Button.o ./Core/Src/DisplayManager/Button.su ./Core/Src/DisplayManager/DisplayManager.d ./Core/Src/DisplayManager/DisplayManager.o ./Core/Src/DisplayManager/DisplayManager.su ./Core/Src/DisplayManager/Fill.d ./Core/Src/DisplayManager/Fill.o ./Core/Src/DisplayManager/Fill.su ./Core/Src/DisplayManager/List.d ./Core/Src/DisplayManager/List.o ./Core/Src/DisplayManager/List.su ./Core/Src/DisplayManager/MessageBox.d ./Core/Src/DisplayManager/MessageBox.o ./Core/Src/DisplayManager/MessageBox.su ./Core/Src/DisplayManager/NumPad.d ./Core/Src/DisplayManager/NumPad.o ./Core/Src/DisplayManager/NumPad.su ./Core/Src/DisplayManager/Text.d ./Core/Src/DisplayManager/Text.o ./Core/Src/DisplayManager/Text.su ./Core/Src/DisplayManager/TextBox.d ./Core/Src/DisplayManager/TextBox.o ./Core/Src/DisplayManager/TextBox.su ./Core/Src/DisplayManager/TickBox.d ./Core/Src/DisplayManager/TickBox.o ./Core/Src/DisplayManager/TickBox.su ./Core/Src/DisplayManager/TitleBar.d ./Core/Src/DisplayManager/TitleBar.o ./Core/Src/DisplayManager/TitleBar.su
 
 .PHONY: clean-Core-2f-Src-2f-DisplayManager
 

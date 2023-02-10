@@ -13,44 +13,62 @@
 
 #include "drivers/ILI9488.h"
 #include "font.h"
+#include "bigfont/bigfont.h"
 
 /**
  * Writes data to an 16-bit parallel bus.
  */
 void parallel_write(unsigned int data) {
+	//Manual, dangerous, GPIO write here because HAL is slow
+	WR_PORT->ODR = (~WR_PIN & WR_PORT->ODR);
+    //HAL_GPIO_WritePin(WR_PORT, WR_PIN, GPIO_PIN_RESET);
+
 	//In this particular example I'm using PA8:15 and PC8:15
-    HAL_GPIO_WritePin(WR_PORT, WR_PIN, GPIO_PIN_RESET);
 	GPIOC->ODR = (data & 0xFF00) | (GPIOC->ODR & 0x00FF); //Remember, we're using the lower half of these pins for other things.
-	GPIOA->ODR = ((data << 8) & 0xFF00) | (GPIOA->ODR & 0x00FF);
-    HAL_GPIO_WritePin(WR_PORT, WR_PIN, GPIO_PIN_SET);
+	GPIOA->ODR = ((data << 8)) | (GPIOA->ODR & 0x00FF);
+
+	//
+    //HAL_GPIO_WritePin(WR_PORT, WR_PIN, GPIO_PIN_SET);
+	WR_PORT->ODR = (WR_PIN | WR_PORT->ODR);
 }
 
 /*
  * Writes a data byte to the display. Pulls CS low as required.
  */
 void lcd_write_data(unsigned int data) {
-    HAL_GPIO_WritePin(DC_PORT, DC_PIN, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_RESET);
-	parallel_write(data);
     //HAL_GPIO_WritePin(DC_PORT, DC_PIN, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_SET);
+    //HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_RESET);
+	//Manual low level port write for speed
+	DC_PORT->ODR = (DC_PIN | DC_PORT->ODR);
+	CS_PORT->ODR = (~CS_PIN & CS_PORT->ODR);
+	parallel_write(data);
+	CS_PORT->ODR = (CS_PIN | CS_PORT->ODR);
+    //HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_SET);
 }
 
 /*
  * Writes a command byte to the display
  */
 void lcd_write_command(unsigned char data) {
-    HAL_GPIO_WritePin(DC_PORT, DC_PIN, GPIO_PIN_RESET);
-    HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_RESET);
+    //HAL_GPIO_WritePin(DC_PORT, DC_PIN, GPIO_PIN_RESET);
+    //HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_RESET);
+	//Manual low level port write for speed
+	DC_PORT->ODR = (~DC_PIN & DC_PORT->ODR);
+	CS_PORT->ODR = (~CS_PIN & CS_PORT->ODR);
 	parallel_write(data);
-    HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_SET);
+	CS_PORT->ODR = (CS_PIN | CS_PORT->ODR);
+    //HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_SET);
 }
 
 void lcd_write_reg(unsigned int data) {
-    HAL_GPIO_WritePin(DC_PORT, DC_PIN, GPIO_PIN_SET);
-    HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_RESET);
+    //HAL_GPIO_WritePin(DC_PORT, DC_PIN, GPIO_PIN_SET);
+    //HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_RESET);
+	//Manual low level port write for speed
+	DC_PORT->ODR = (DC_PIN | DC_PORT->ODR);
+	CS_PORT->ODR = (~CS_PIN & CS_PORT->ODR);
 	parallel_write(data);
-    HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_SET);
+	CS_PORT->ODR = (CS_PIN | CS_PORT->ODR);
+    //HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_SET);
 }
 
 /*
@@ -272,6 +290,21 @@ void fill_rectangle(unsigned int x1, unsigned int y1, unsigned int x2, unsigned 
 }
 
 /*
+ * draws an empty rectangle with a given border weight.
+ */
+void empty_rectangle(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2, unsigned int colour, unsigned int border_weight) {
+
+	//Top border
+	fill_rectangle(x1 + border_weight, y1, x2, y1 + 1, colour);
+	//Left border
+	fill_rectangle(x1, y1 + border_weight, x1 + 1, y2, colour);
+	//Bottom border
+	fill_rectangle(x1 + border_weight, y2, x2, y2 + border_weight, colour);
+	//Right border
+	fill_rectangle(x2, y1 + border_weight, x2 + border_weight, y2, colour);
+}
+
+/*
  * Draws a single char to the screen.
  */
 void draw_char(unsigned int x, unsigned int y, char c, unsigned int colour, char size) {
@@ -285,18 +318,18 @@ void draw_char(unsigned int x, unsigned int y, char c, unsigned int colour, char
         line = FontLarge[font_index][12 - i];
 
         //Draw the pixels to screen
-        for(j=0; j<8; j++) {
-            if(line & (0x01 << j)) {
-                if(size == 1) {
-                    //If we are just doing the smallest size font then do a single pixel each
-                    draw_pixel(x+(8-j), y+i, colour);
-                }
-                else {
-                    // do a small box to represent each pixel
-                    fill_rectangle(x+((8-j)*size), y+((i)*size), x+((8-j)*size)+size, y+((i)*size)+size, colour);
-                }
-            }
-        }
+		for(j=0; j<8; j++) {
+			if(line & (0x01 << j)) {
+				if(size == 1) {
+					//If we are just doing the smallest size font then do a single pixel each
+					draw_pixel(x+(8-j), y+i, colour);
+				}
+				else {
+					// do a small box to represent each pixel
+					fill_rectangle(x+((8-j)*size), y+((i)*size), x+((8-j)*size)+size, y+((i)*size)+size, colour);
+				}
+			}
+		}
     }
 }
 
@@ -453,7 +486,7 @@ void draw_bitmap_with_alpha(unsigned int x1, unsigned int y1, unsigned int alpha
 /**
  * Fills a rectangle with a gradient between two colours.
  */
-void fill_gradient(int x1, int y1, int x2, int y2, unsigned int startColour, unsigned int endColour, Orientation orientation) {
+void fill_gradient(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2, unsigned int startColour, unsigned int endColour, Orientation orientation) {
 	//Calculate each colour channel
 	unsigned char rStart = (startColour >> 11) & 0x1F;
     unsigned char gStart = (startColour >> 5) & 0x3F;
@@ -479,20 +512,19 @@ void fill_gradient(int x1, int y1, int x2, int y2, unsigned int startColour, uns
 	unsigned int thisG = gStart;
 	unsigned int thisB = bStart;
 
-	//Doing a normal rectangle fill but we change the colour as we go
     //Set the drawing region
     set_draw_window(x1, y1, x2, y2);
+
     //CS low to begin data
     HAL_GPIO_WritePin(DC_PORT, DC_PIN, GPIO_PIN_SET);
     HAL_GPIO_WritePin(CS_PORT, CS_PIN, GPIO_PIN_RESET);
 
+
+	//Doing a normal rectangle fill but we change the colour as we go
     //Write colour to each pixel
     unsigned int colour = startColour;
-    for(int y = 0; y < y2-y1 ; y++) {
-        for(int x = 0; x < x2-x1; x++) {
-        	//Send them to the display
-        	parallel_write(colour);
-
+    for(int y = 0; y <= y2-y1; y++) {
+        for(int x = 0; x <= x2-x1; x++) {
         	//For a horizontal gradient, update on each X increment
             if(orientation == HORIZONTAL) {
     			//Increment the colours
@@ -503,6 +535,8 @@ void fill_gradient(int x1, int y1, int x2, int y2, unsigned int startColour, uns
     			colour = (thisR << 11) | (thisG << 5) | (thisB);
             }
 
+        	//Send them to the display
+        	parallel_write(colour);
         }
 
         //For a vertical gradient, change on each Y increment

@@ -169,11 +169,6 @@ void EXTI9_5_IRQHandler(void)
 {
   /* USER CODE BEGIN EXTI9_5_IRQn 0 */
 
-	  /* USER CODE BEGIN EXTI15_10_IRQn 0 */
-
-	//Touch screen interrupt has occured. Notify the touch screen thread.
-	xTaskNotifyFromISR( touchTaskHandle, 0, eSetValueWithOverwrite, pdFALSE);
-
   /* USER CODE END EXTI9_5_IRQn 0 */
   HAL_GPIO_EXTI_IRQHandler(CTP_INT_Pin);
   /* USER CODE BEGIN EXTI9_5_IRQn 1 */

@@ -7,20 +7,26 @@
 C_SRCS += \
 ../Core/Src/screens/ChangeTimeScreen.c \
 ../Core/Src/screens/DeviceTestScreen.c \
+../Core/Src/screens/EditTimerScreen.c \
 ../Core/Src/screens/HomeScreen.c \
-../Core/Src/screens/SettingsTaskScreen.c 
+../Core/Src/screens/SettingsTaskScreen.c \
+../Core/Src/screens/TimeListScreen.c 
 
 C_DEPS += \
 ./Core/Src/screens/ChangeTimeScreen.d \
 ./Core/Src/screens/DeviceTestScreen.d \
+./Core/Src/screens/EditTimerScreen.d \
 ./Core/Src/screens/HomeScreen.d \
-./Core/Src/screens/SettingsTaskScreen.d 
+./Core/Src/screens/SettingsTaskScreen.d \
+./Core/Src/screens/TimeListScreen.d 
 
 OBJS += \
 ./Core/Src/screens/ChangeTimeScreen.o \
 ./Core/Src/screens/DeviceTestScreen.o \
+./Core/Src/screens/EditTimerScreen.o \
 ./Core/Src/screens/HomeScreen.o \
-./Core/Src/screens/SettingsTaskScreen.o 
+./Core/Src/screens/SettingsTaskScreen.o \
+./Core/Src/screens/TimeListScreen.o 
 
 
 # Each subdirectory must supply rules for building sources it contributes
@@ -30,7 +36,7 @@ Core/Src/screens/%.o Core/Src/screens/%.su: ../Core/Src/screens/%.c Core/Src/scr
 clean: clean-Core-2f-Src-2f-screens
 
 clean-Core-2f-Src-2f-screens:
-	-$(RM) ./Core/Src/screens/ChangeTimeScreen.d ./Core/Src/screens/ChangeTimeScreen.o ./Core/Src/screens/ChangeTimeScreen.su ./Core/Src/screens/DeviceTestScreen.d ./Core/Src/screens/DeviceTestScreen.o ./Core/Src/screens/DeviceTestScreen.su ./Core/Src/screens/HomeScreen.d ./Core/Src/screens/HomeScreen.o ./Core/Src/screens/HomeScreen.su ./Core/Src/screens/SettingsTaskScreen.d ./Core/Src/screens/SettingsTaskScreen.o ./Core/Src/screens/SettingsTaskScreen.su
+	-$(RM) ./Core/Src/screens/ChangeTimeScreen.d ./Core/Src/screens/ChangeTimeScreen.o ./Core/Src/screens/ChangeTimeScreen.su ./Core/Src/screens/DeviceTestScreen.d ./Core/Src/screens/DeviceTestScreen.o ./Core/Src/screens/DeviceTestScreen.su ./Core/Src/screens/EditTimerScreen.d ./Core/Src/screens/EditTimerScreen.o ./Core/Src/screens/EditTimerScreen.su ./Core/Src/screens/HomeScreen.d ./Core/Src/screens/HomeScreen.o ./Core/Src/screens/HomeScreen.su ./Core/Src/screens/SettingsTaskScreen.d ./Core/Src/screens/SettingsTaskScreen.o ./Core/Src/screens/SettingsTaskScreen.su ./Core/Src/screens/TimeListScreen.d ./Core/Src/screens/TimeListScreen.o ./Core/Src/screens/TimeListScreen.su
 
 .PHONY: clean-Core-2f-Src-2f-screens
 

@@ -54,7 +54,7 @@ Core/Src/DisplayManager/TitleBar.o: ../Core/Src/DisplayManager/TitleBar.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  ../Core/Inc/drivers/DS3231.h ../Core/Inc/drivers/FT5446.h \
  ../Core/Inc/main.h ../Core/Inc/DisplayManager/TitleBar.h \
- ../Core/Inc/colours.h
+ ../Core/Inc/colours.h ../Core/Inc/bitmaps/home_small.h
 ../Core/Inc/DisplayManager/DisplayManager.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -114,3 +114,4 @@ Core/Src/DisplayManager/TitleBar.o: ../Core/Src/DisplayManager/TitleBar.c \
 ../Core/Inc/main.h:
 ../Core/Inc/DisplayManager/TitleBar.h:
 ../Core/Inc/colours.h:
+../Core/Inc/bitmaps/home_small.h:

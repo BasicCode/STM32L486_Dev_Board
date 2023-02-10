@@ -11,6 +11,8 @@
 #include "DisplayManager/NumPad.h"
 #include "DisplayManager/Button.h"
 #include "DisplayManager/List.h"
+#include "DisplayManager/TickBox.h"
+#include "DisplayManager/TitleBar.h"
 
 
 //Your LCD driver
@@ -234,6 +236,12 @@ int DM_Do_Press(struct Touch touch) {
 			break;
 		case TEXTBOX:
 			DM_TextBox_onPress(id);
+			break;
+		case TICKBOX:
+			DM_TickBox_onPress(id);
+			break;
+		case TITLEBAR:
+			DM_Title_Bar_onPress(id, touch.X, touch.Y);
 			break;
 		}
 

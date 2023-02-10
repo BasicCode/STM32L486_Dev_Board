@@ -17,6 +17,8 @@
 #include "DisplayManager/Animation.h"
 #include "DisplayManager/Fill.h"
 #include "DisplayManager/Text.h"
+#include "DisplayManager/Animation.h"
+#include "DisplayManager/TickBox.h"
 
 #include "colours.h"
 #include "drivers/DS3231.h"
@@ -122,7 +124,7 @@ void MainMenuTask(void const * arguments) {
  * onPress callback for the settings screen button
  */
 void settingsScreen_onPress(int id) {
-	xTaskNotify(changeScreenTaskHandle, SETTINGS, eSetValueWithOverwrite);
+	xTaskNotify(changeScreenTaskHandle, TIMER_LIST, eSetValueWithOverwrite);
 }
 
 /**

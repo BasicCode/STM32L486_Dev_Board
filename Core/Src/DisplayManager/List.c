@@ -35,22 +35,30 @@ struct DisplayElement DM_New_List(int x1, int y1, int x2, int y2, char **childre
  * Draws the list elements to the screen
  */
 void DM_List(int id) {
-	const int lineHeight = 30;
-	const int linePadding = 4;
+	const int lineHeight = 35;
 	const int textPadding = 4;
-	const int selectedColour = COLOR_LIGHTBLUE;
+	const int selectedColour = PRIMARY_COLOUR;
 	const int textColour = COLOR_BLACK;
 
 	//Check if the list is going to overflow and need to scroll
-	int maxVisibleElements = (int)((elements[id].y2 - elements[id].y1) / (lineHeight + linePadding));
+	int maxVisibleElements = (int)((elements[id].y2 - elements[id].y1) / (lineHeight));
+	int midX = (int)((elements[id].x2 - elements[id].x1) / 2);
+	int hLineColour1 = COLOR_WHITE;
+	int hLineColour2 = COLOR_LIGHTGRAY;
 
 	for(int i = 0; i < elements[id].numChildren; i++) {
-		int thisY = elements[id].y1 + (i * (lineHeight + linePadding));
+		//If we have exceeded the display size then break
+		if(i >= maxVisibleElements)
+			break;
+
+		int thisY = elements[id].y1 + (i * (lineHeight));
 		//If this element is selected then draw a box around it
 		if(elements[id].state == SELECTED) {
 			//If this is the element that is selected then draw a highlight
-			if(elements[id].selected == i)
-				fill_rectangle(elements[id].x1, thisY, elements[id].x2, thisY + lineHeight, selectedColour);
+			if(elements[id].selected == i) {
+				fill_gradient(elements[id].x1, thisY, elements[id].x2, thisY + lineHeight, selectedColour, BG_COLOUR,  HORIZONTAL);
+
+			}
 			else
 				fill_rectangle(elements[id].x1, thisY, elements[id].x2, thisY + lineHeight, BG_COLOUR);
 
@@ -60,7 +68,10 @@ void DM_List(int id) {
 		draw_string(elements[id].x1 + 10, thisY + textPadding, textColour, 2, elements[id].children[i]);
 
 		//Put a divider line after each item
-		fill_rectangle(elements[id].x1 + 30, thisY + lineHeight - 1, elements[id].x2 - 30, thisY + lineHeight, COLOR_LIGHTGRAY);
+		fill_gradient(elements[id].x1 + 30, thisY + lineHeight - 1, midX, thisY + lineHeight, hLineColour1, hLineColour2, HORIZONTAL);
+		fill_gradient(midX, thisY + lineHeight - 1, elements[id].x2 - 30, thisY + lineHeight, hLineColour2, hLineColour1, HORIZONTAL);
+
+
 	}
 }
 
@@ -69,7 +80,7 @@ void DM_List(int id) {
  * was pressed.
  */
 void DM_List_onPress(int id, int x, int y) {
-	const int lineHeight = 30;
+	const int lineHeight = 35;
 
 	elements[id].state = SELECTED;
 	elements[id].refresh = ONCE;

@@ -145,6 +145,7 @@ void lcd_init_command_list(void);
 void draw_pixel(unsigned int x, unsigned int y, unsigned int colour);
 void set_draw_window(unsigned int row_start, unsigned int row_end, unsigned int col_start, unsigned int col_end);
 void fill_rectangle(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2, unsigned int colour);
+void empty_rectangle(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2, unsigned int colour, unsigned int border_weight);
 void draw_char(unsigned int x, unsigned int y, char c, unsigned int colour, char size);
 void draw_fast_char(unsigned int x, unsigned int y, char c, unsigned int colour, unsigned int bg_colour);
 void draw_string(unsigned int x, unsigned int y, unsigned int colour, char size, char *str);
@@ -153,7 +154,7 @@ void draw_line(unsigned int x1, unsigned int y1, char x2, char y2, unsigned int 
 void draw_bitmap(unsigned int x, unsigned int y, int scale, const unsigned int *bmp);
 void draw_bitmap_with_alpha(unsigned int x1, unsigned int y1, unsigned int alphaColour, int scale, const unsigned int *bmp);
 void fill_fast_rectangle(unsigned int x1, unsigned int y1, unsigned int colour);
-void fill_gradient(int x1, int y1, int x2, int y2, unsigned int startColour, unsigned int endColour, Orientation orientation);
+void fill_gradient(unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2, unsigned int startColour, unsigned int endColour, Orientation orientation);
 
 #endif	/* ILI9488_H */
 

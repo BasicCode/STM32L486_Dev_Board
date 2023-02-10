@@ -19,6 +19,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
 #include "cmsis_os.h"
+#include "drivers/FT5446.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
@@ -72,6 +73,13 @@ void StartDefaultTask(void const * argument);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+//CTP Interrupt Callback function
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	//Touch screen interrupt has occured. Notify the touch screen thread.
+	xTaskNotifyFromISR( touchTaskHandle, 0, eSetValueWithOverwrite, pdFALSE);
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -108,6 +116,9 @@ int main(void)
   MX_CRC_Init();
   /* USER CODE BEGIN 2 */
 
+  /*
+   * Low level initialisations
+   */
   //Turn the Power LED on
   HAL_GPIO_WritePin(PWR_LED_GPIO_Port, PWR_LED_Pin, GPIO_PIN_SET);
 
@@ -117,6 +128,9 @@ int main(void)
   //Bring the CTP out of reset
   //Dont' forget that the top half of PORTC is used by the LCD Data
   HAL_GPIO_WritePin(CTP_RST_GPIO_Port, CTP_RST_Pin, GPIO_PIN_SET);
+  HAL_Delay(10);
+
+  FT5446_init();
 
   /* USER CODE END 2 */
 

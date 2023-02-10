@@ -8,6 +8,13 @@
 #ifndef INC_COLOURS_H_
 #define INC_COLOURS_H_
 
+//Custom colours
+#define PRIMARY_COLOUR				0x1358
+#define PRIMARY_COLOUR_SELECTED		0x7495
+#define SECONDARY_COLOUR			0xFFFF
+#define TITLE_COLOUR				0xC618
+#define CHECKED_COLOUR				0x03E0
+
 /* RGB 16-bit color table definition (RG565) */
 #define COLOR_BLACK          0x0000      /*   0,   0,   0 */
 #define COLOR_WHITE          0xFFFF      /* 255, 255, 255 */

@@ -33,7 +33,8 @@ typedef enum {
 	ANIMATION,
 	NUMPAD,
 	KEYBOARD,
-	TEXTBOX
+	TEXTBOX,
+	TICKBOX
 } Type;
 //Refresh frequency of the element
 typedef enum {

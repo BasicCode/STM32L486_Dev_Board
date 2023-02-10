@@ -55,7 +55,9 @@ Core/Src/DevBoard.o: ../Core/Src/DevBoard.c ../Core/Inc/DevBoard.h \
  ../Core/Inc/drivers/DS3231.h ../Core/Inc/screens/DeviceTestScreen.h \
  ../Core/Inc/screens/HomeScreen.h \
  ../Core/Inc/screens/SettingsTaskScreen.h \
- ../Core/Inc/screens/ChangeTimeScreen.h
+ ../Core/Inc/screens/ChangeTimeScreen.h \
+ ../Core/Inc/screens/EditTimerScreen.h \
+ ../Core/Inc/screens/TimerListScreen.h
 ../Core/Inc/DevBoard.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
@@ -119,3 +121,5 @@ Core/Src/DevBoard.o: ../Core/Src/DevBoard.c ../Core/Inc/DevBoard.h \
 ../Core/Inc/screens/HomeScreen.h:
 ../Core/Inc/screens/SettingsTaskScreen.h:
 ../Core/Inc/screens/ChangeTimeScreen.h:
+../Core/Inc/screens/EditTimerScreen.h:
+../Core/Inc/screens/TimerListScreen.h:
